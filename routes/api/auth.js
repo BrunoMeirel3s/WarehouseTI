@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../../middleware/auth"); //our method to verifie if the user has a valid token
-const User = require("../../models/User"); //The model that establish the connection with our database
+const Usuario = require("../../models/Usuario"); //The model that establish the connection with our database
 const config = require("config"); //responsible for call variables for other documents
 const { check, validationResult } = require("express-validator/check"); //this require is used for validate the information that the user sent via frontEnd
 const jwt = require("jsonwebtoken"); //responsible for regenerate the token that will be verified
@@ -21,7 +21,7 @@ router.get("/", auth, async (req, res) => {
    * when the comand res.json() sent the information
    */
   try {
-    const user = await User.findById(req.user.id).select("-password");
+    const usuario = await Usuario.findById(req.user.id).select("-senha");
     res.json(user); //sending the object user as the response for '/' route
   } catch (err) {
     console.error(err.message);
@@ -35,8 +35,8 @@ router.get("/", auth, async (req, res) => {
 router.post(
   "/",
   [
-    check("email", "Please include a valid email").isEmail(),
-    check("password", "Password is required").exists(),
+    check("matricula", "Insira sua matrícula").exists(),
+    check("senha", "Insira sua senha").exists(),
   ],
   async (req, res) => {
     //const erros receive the results of the validations above
@@ -47,38 +47,38 @@ router.post(
     }
 
     //here we're destructuring email and password from req.body that is the value sent from the frontEnd
-    const { email, password } = req.body;
+    const { matricula, senha } = req.body;
 
     try {
       //See if the user exists
-      let user = await User.findOne({ email }); //search for the email in our database
-      if (!user) {
+      let usuario = await Usuario.findOne({ matricula }); //search for the email in our database
+      if (!usuario) {
         //if the email is not defined in our database
         return res
           .status(400)
-          .json({ erros: [{ msg: "Invalid Credentials" }] });
+          .json({ erros: [{ msg: "Credenciais inválidas" }] });
       }
 
       /**
-       * isMatch receive the comparison result of 'password' that is the value
-       * detructured from req.body and the value 'user.password' that is the password
+       * isMatch receive the comparison result of 'senha' that is the value
+       * detructured from req.body and the value 'usuario.senha' that is the password
        * of the object user that we take from out database
        */
-      const isMatch = await bcrypt.compare(password, user.password);
+      const isMatch = await bcrypt.compare(senha, usuario.senha);
 
       //here we're checking if isMatch is false which means that password is incorrect
       if (!isMatch) {
         //if the password doesn't match
         return res
           .status(400)
-          .json({ erros: [{ msg: "Invalid Credentials" }] });
+          .json({ erros: [{ msg: "Credenciais inválidas" }] });
       }
 
       //Bellow we have the generation token process again, and the user will receive his token after a valid login
 
       const payload = {
-        user: {
-          id: user.id,
+        usuario: {
+          id: usuario.id,
         },
       };
 

@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const gravatar = require("gravatar"); //responsible for take the url for the users'photo
 const bcrypt = require("bcryptjs"); //responsible for encrypt the user password
 const jwt = require("jsonwebtoken"); //responsible for regenerate the token that will be verified
 const config = require("config"); //responsible for call variables for other documents
@@ -9,7 +8,7 @@ const config = require("config"); //responsible for call variables for other doc
 const { check, validationResult } = require("express-validator/check");
 
 //the instance from the model User that can be used for call de database methods such as save()
-const User = require("../../models/User");
+const Usuario = require("../../models/Usuario");
 
 // @route  POST api/users
 // @desc   Register user
@@ -23,11 +22,11 @@ const User = require("../../models/User");
 router.post(
   "/",
   [
-    check("name", "Name is required").not().isEmpty(),
-    check("email", "Please include a valid email").isEmail(),
+    check("nome", "Insira o nome do colaborador").not().isEmpty(),
+    check("matricula", "Insira a matrícula do colaborador").not().isEmpty(),
     check(
-      "password",
-      "Please enter a password with 6 or more characters"
+      "senha",
+      "Insira uma senha com mais de 6 caracteres"
     ).isLength({ min: 6 }),
   ],
   async (req, res) => {
@@ -39,31 +38,25 @@ router.post(
     }
 
     //here we're destructuring name, email and password from req.body
-    const { name, email, password } = req.body;
+    const { nome, matricula, senha, ativo, administrador } = req.body;
 
     try {
       //See if the user exists
-      let user = await User.findOne({ email }); //search for the email in our database
-      if (user) {
+      let usuario = await Usuario.findOne({ matricula }); //search for the user in our database
+      if (usuario) {
         //if the email already exists in our db we're going to send the msg bellow for the user
         return res
           .status(400)
-          .json({ erros: [{ msg: "User already exists" }] });
+          .json({ erros: [{ msg: "Usuário já cadastrado" }] });
       }
 
-      //Get users gravatar
-      const avatar = gravatar.url(email, {
-        s: "200",
-        r: "pg",
-        d: "mm",
-      });
-
-      //create the instance of the model User, having all the attributes we want to send to our db
-      user = new User({
-        name,
-        email,
-        avatar,
-        password,
+      //create the instance of the model Usuário, having all the attributes we want to send to our db
+      usuario = new Usuario({
+        nome,
+        matricula,
+        ativo,
+        senha,
+        administrador
       });
 
       //Encrypt password
@@ -71,10 +64,10 @@ router.post(
       const salt = await bcrypt.genSalt(10);
 
       //user.password is encrypted using the method hash()
-      user.password = await bcrypt.hash(password, salt);
+      usuario.senha = await bcrypt.hash(senha, salt);
 
       //save the instance user in our database using the method save() inherited from mongoose
-      await user.save();
+      await usuario.save();
 
       //return jsonwebtoken
       /**
@@ -84,8 +77,8 @@ router.post(
        */
 
       const payload = {
-        user: {
-          id: user.id,
+        usuario: {
+          id: usuario.id,
         },
       };
 

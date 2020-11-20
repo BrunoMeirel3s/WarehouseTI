@@ -1,0 +1,61 @@
+body{
+    background-color: white
+}
+
+.card{
+    border: 1px solid rgba(0,0,0,0.4);
+    /*box-shadow: 5px 5px 14px -1px rgba(0,0,0,0.75);*/
+}
+
+.card-header{
+    background:  rgb(199, 9, 18);
+}
+
+.btn-red{
+    background: rgb(199, 9, 18)!important;
+    color: white;
+}
+
+.btn-red:hover{
+    background: white!important;
+    color: rgb(199, 9, 18);
+    border: 1px solid rgb(199, 9, 18);
+}
+
+.menu{
+    background: rgb(199, 9, 18)!important;
+    color: white;
+    min-height: 400px;
+}
+
+.menu-items li{
+    list-style-type: none;
+}
+
+.menu-items a{
+    text-decoration: none !important;
+    color: white;
+}
+.menu-items a:hover{
+    color:rgb(199, 9, 18);
+    background-color: white ;
+}
+
+.active{
+ background: white;
+}
+
+.active a{
+    color: rgb(199, 9, 18)!important;
+}
+
+.label{
+    font-size: 1.2rem;
+}
+.label-2{
+    font-size: 1.4rem;
+}
+
+.content{
+    border: 1px solid rgba(0,0,0,0.1);
+}

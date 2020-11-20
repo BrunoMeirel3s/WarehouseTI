@@ -9,7 +9,7 @@ module.exports = function (req, res, next) {
 
   //Check if not token
   if (!token) {
-    return res.status(401).json({ msg: "No Token, authorization denied" });
+    return res.status(401).json({ msg: "Sem Token, autorização negada" });
   }
 
   //Verify token
@@ -26,10 +26,9 @@ module.exports = function (req, res, next) {
      * it means that we're calling the next function, and in the moment that auth document is called it will pass the objet user
      * as a request
      */
-    req.user = decoded.user;
-
+    req.usuario = decoded.usuario;
     next();
   } catch (err) {
-    res.status(401).json({ msg: "Token is not valid" });
+    res.status(401).json({ msg: "Token inválido" });
   }
 };
