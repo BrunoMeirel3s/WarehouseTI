@@ -59,6 +59,9 @@ router.post(
           .json({ erros: [{ msg: "Credenciais inválidas" }] });
       }
 
+      if (usuario.ativo !== true) {
+        return res.status(400).json({ erros: [{ msg: "Usuário inativo" }] });
+      }
       /**
        * isMatch receive the comparison result of 'senha' that is the value
        * detructured from req.body and the value 'usuario.senha' that is the password
