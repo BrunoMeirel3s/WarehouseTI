@@ -1,25 +1,21 @@
 const mongoose = require('mongoose')
-
-const ImpressoraSchema = new mongoose.Schema({
-    patrimonio:{
+const SuprimentoSchema = new mongoose.Schema({
+    codigo:{
         type: String,
         required:true,
-        unique: true 
-    },
-    localizacao:{
-       type: String,
-       required:true
+        unique:true
     },
     modelo:{
+       type: String,
+       required:true,
+    },
+    cor:{
         type: String,
         required: true
     },
-    enderecoIp:{
-        type: String
-    },
     disponivel:{
         type: Boolean,
-        require: true
+        required: true
     },
     data:{
         type: Date,
@@ -27,4 +23,4 @@ const ImpressoraSchema = new mongoose.Schema({
     }
 })
 
-module.exports = Impressora = mongoose.model('impressora', ImpressoraSchema)
+module.exports = Suprimento = mongoose.model('suprimento', SuprimentoSchema)

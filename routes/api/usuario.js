@@ -9,7 +9,39 @@ const { check, validationResult } = require("express-validator/check");
 
 //the instance from the model User that can be used for call de database methods such as save()
 const Usuario = require("../../models/Usuario");
+const auth = require("../../middleware/auth");
 
+
+router.put("/", auth, async (req, res) => {
+  const { nome, matricula, senha, ativo } = req.body;
+
+  const camposUsuario = {};
+
+  if (nome) camposUsuario.nome = nome;
+  if (matricula) camposUsuario.matricula = matricula;
+  if (senha) {
+    const salt = await bcrypt.genSalt(10);
+    camposUsuario.senha = await bcrypt.hash(senha, salt);
+  }
+  if (ativo) camposUsuario.ativo = ativo;
+
+  try {
+    let usuario = await Usuario.findOne({ matricula});
+    if (usuario) {
+      usuario = await Usuario.findOneAndUpdate(
+        { matricula: req.body.matricula },
+        { $set: camposUsuario },
+        { new: true }
+      );
+      return res.json(usuario);
+    }else{
+       return res.send("Usuário não encontrado")
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
 // @route  POST api/users
 // @desc   Register user
 // @access Public
@@ -24,10 +56,9 @@ router.post(
   [
     check("nome", "Insira o nome do colaborador").not().isEmpty(),
     check("matricula", "Insira a matrícula do colaborador").not().isEmpty(),
-    check(
-      "senha",
-      "Insira uma senha com mais de 6 caracteres"
-    ).isLength({ min: 6 }),
+    check("senha", "Insira uma senha com mais de 6 caracteres").isLength({
+      min: 6,
+    }),
   ],
   async (req, res) => {
     //const erros receive the results of the validations above
@@ -56,7 +87,7 @@ router.post(
         matricula,
         ativo,
         senha,
-        administrador
+        administrador,
       });
 
       //Encrypt password
