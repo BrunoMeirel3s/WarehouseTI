@@ -35,6 +35,7 @@ app.use('/api/usuario', require('./routes/api/usuario'))
 app.use('/api/auth', require('./routes/api/auth'))
 app.use('/api/equipamento', require('./routes/api/impressora'))
 app.use('/api/suprimento', require('./routes/api/suprimento'))
+app.use('/api/registrotroca', require('./routes/api/registroTroca'));
 
 //this is the port where our serve is going to send data and listen
 const PORT = process.env.PORT || 5000;
