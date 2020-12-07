@@ -1,38 +1,61 @@
-.App {
-  text-align: center;
+body{
+    background-color: white
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.card{
+    border: 1px solid rgba(0,0,0,0.4);
+    /*box-shadow: 5px 5px 14px -1px rgba(0,0,0,0.75);*/
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.card-header{
+    background:  rgb(199, 9, 18);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.btn-red{
+    background: rgb(199, 9, 18)!important;
+    color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.btn-red:hover{
+    background: white!important;
+    color: rgb(199, 9, 18);
+    border: 1px solid rgb(199, 9, 18);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.menu{
+    background: rgb(199, 9, 18)!important;
+    color: white;
+    min-height: 400px;
+}
+
+.menu-items li{
+    list-style-type: none;
+}
+
+.menu-items a{
+    text-decoration: none !important;
+    color: white;
+}
+.menu-items a:hover{
+    color:rgb(199, 9, 18);
+    background-color: white ;
+}
+
+.active{
+ background: white;
+}
+
+.active a{
+    color: rgb(199, 9, 18)!important;
+}
+
+.label{
+    font-size: 1.2rem;
+}
+.label-2{
+    font-size: 1.4rem;
+}
+
+.content{
+    border: 1px solid rgba(0,0,0,0.1);
 }
