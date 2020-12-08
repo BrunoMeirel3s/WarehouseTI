@@ -21,11 +21,11 @@ router.get("/", auth, async (req, res) => {
    * when the comand res.json() sent the information
    */
   try {
-    const usuario = await Usuario.findById(req.user.id).select("-senha");
-    res.json(user); //sending the object user as the response for '/' route
+    const usuario = await Usuario.findById(req.usuario.id).select("-senha");
+    res.json(usuario); //sending the object user as the response for '/' route
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send("Erro no servidor");
   }
 });
 

@@ -1,6 +1,6 @@
 import {
-  SUCESSO_REGISTRO,
-  FALHA_REGISTRO,
+  SUCESSO_REGISTRO_USUARIO,
+  FALHA_REGISTRO_USUARIO,
   USUARIO_LOGADO,
   ERRO_AUTENTICACAO,
   SUCESSO_LOGIN,
@@ -11,6 +11,7 @@ import {
 const estadosIniciais = {
   token: localStorage.getItem("token"),
   isAuthenticated: null,
+  loading: true,
   usuario: null,
 };
 
@@ -25,24 +26,25 @@ export default function (state = estadosIniciais, action) {
         loading: false,
         usuario: payload,
       };
-    case SUCESSO_REGISTRO:
+    case SUCESSO_REGISTRO_USUARIO:
     case SUCESSO_LOGIN:
-        localStorage.setItem("token", payload.token);
-        return {
+      localStorage.setItem("token", payload.token);
+      return {
         ...state,
         ...payload,
-        isAuthenticated: true
-        }
+        isAuthenticated: true,
+      };
     case FALHA_LOGIN:
     case ERRO_AUTENTICACAO:
-    case FALHA_REGISTRO:
+    case FALHA_REGISTRO_USUARIO:
     case LOGOUT:
-        localStorage.removeItem("token");
-        return {
-            ...state,
-            token: null,
-            isAuthenticated: false
-        }
+      localStorage.removeItem("token");
+      return {
+        ...state,
+        token: null,
+        isAuthenticated: false,
+        loading: false,
+      };
 
     default:
       return state;

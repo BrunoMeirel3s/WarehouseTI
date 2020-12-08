@@ -25,8 +25,8 @@ const Login = ({ login, isAuthenticated }) => {
     login(matricula, senha);
   };
 
-  if(isAuthenticated){
-    return <Redirect to="www.google.com.br"/>
+  if (isAuthenticated) {
+    return <Redirect to="/trocatoner" />;
   }
 
   return (
@@ -91,8 +91,12 @@ const Login = ({ login, isAuthenticated }) => {
   );
 };
 
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.isAuthenticated,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { login })(Login);

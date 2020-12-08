@@ -3,11 +3,12 @@
  * in some component. The index here is responsible to gather all the reducers, such as alert.js and others
  */
 import { combineReducers } from "redux";
-//import alert from "./alert";
+import alert from "./alert";
 import auth from "./auth";
-//import profile from "./profile";
+import suprimentos from "./suprimentos";
 
 export default combineReducers({
-  auth
-  //profile,
+  auth,
+  alert,
+  suprimentos,
 });

@@ -17,16 +17,16 @@ router.put("/", auth, async (req, res) => {
   if (disponivel) camposSuprimento.disponivel = disponivel;
 
   try {
-    let suprimento = await Suprimento.findOne({codigo})
-    if(suprimento){
-        suprimento = await Suprimento.findOneAndUpdate(
-            {codigo: req.body.codigo},
-            {$set: camposSuprimento},
-            {new: true}
-        );
-        return res.json(suprimento)
-    }else{
-        return res.status(400).send("Suprimento não encontrado")
+    let suprimento = await Suprimento.findOne({ codigo });
+    if (suprimento) {
+      suprimento = await Suprimento.findOneAndUpdate(
+        { codigo: req.body.codigo },
+        { $set: camposSuprimento },
+        { new: true }
+      );
+      return res.json(suprimento);
+    } else {
+      return res.status(400).send("Suprimento não encontrado");
     }
   } catch (err) {
     console.log(err.message);
@@ -46,9 +46,13 @@ router.post(
       check(
         "modelo",
         "Insira o modelo de equipamento para qual o suprimento será utilizado"
-      ),
-      check("disponivel", "Informe se o suprimento está disponível"),
-      check("cor", "Insira a cor do suprimento"),
+      )
+        .not()
+        .isEmpty(),
+      check("disponivel", "Informe se o suprimento está disponível")
+        .not()
+        .isEmpty(),
+      check("cor", "Insira a cor do suprimento").not().isEmpty(),
     ],
   ],
   async (req, res) => {
