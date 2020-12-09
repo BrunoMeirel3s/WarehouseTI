@@ -1,10 +1,10 @@
 import React, { Fragment, useState } from "react";
 import { Link, Redirect, Switch } from "react-router-dom";
 import { connect } from "react-redux";
-import { inserirSuprimento } from "../../actions/suprimentos";
+import { inserirSuprimento, obterTodosSuprimentos } from "../../actions/suprimentos";
 import PropTypes from "prop-types";
 
-const Suprimentos = ({ inserirSuprimento, sucessoSuprimento }) => {
+const Suprimentos = ({ inserirSuprimento, sucessoSuprimento, obterTodosSuprimentos }) => {
   const [formData, setFormData] = useState({
     codigo: "",
     modelo: "C911",
@@ -108,10 +108,11 @@ const Suprimentos = ({ inserirSuprimento, sucessoSuprimento }) => {
 Suprimentos.propTypes = {
   inserirSuprimento: PropTypes.func.isRequired,
   sucessoSuprimento: PropTypes.bool,
+  obterTodosSuprimentos: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   sucessoSuprimento: state.suprimentos.sucessoSuprimento,
 });
 
-export default connect(mapStateToProps, { inserirSuprimento })(Suprimentos);
+export default connect(mapStateToProps, { inserirSuprimento, obterTodosSuprimentos })(Suprimentos);
