@@ -84,4 +84,21 @@ router.post(
   }
 );
 
+router.get("/", async (req, res) => {
+  const { codigo } = req.body;
+  try {
+    let suprimento;
+
+    if (codigo) {
+      suprimento = await Suprimento.findOne({ codigo });
+    } else {
+      suprimento = await Suprimento.find();
+    }
+    return res.json(suprimento);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;

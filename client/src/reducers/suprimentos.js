@@ -1,11 +1,13 @@
 import {
   SUCESSO_INSERIR_SUPRIMENTO,
   FALHA_INSERIR_SUPRIMENTO,
+  OBTER_TODOS_SUPRIMENTOS,
 } from "../actions/types";
 
 const estadosInicias = {
   suprimento: null,
   sucessoSuprimento: false,
+  todosSuprimentos: null
 };
 
 export default function (state = estadosInicias, action) {
@@ -22,6 +24,11 @@ export default function (state = estadosInicias, action) {
         ...state,
         sucessoSuprimento: false,
       };
+    case OBTER_TODOS_SUPRIMENTOS:
+      return{
+        ...state,
+        todosSuprimentos: payload
+      }
     default:
       return state;
   }
