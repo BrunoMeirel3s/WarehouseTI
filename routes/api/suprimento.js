@@ -73,6 +73,7 @@ router.post(
         modelo,
         cor,
         disponivel,
+        utilizado: false
       });
 
       await suprimento.save();
@@ -84,7 +85,7 @@ router.post(
   }
 );
 
-router.get("/", async (req, res) => {
+router.get("/disponivel", async (req, res) => {
   const { codigo } = req.body;
   try {
     let suprimento;
@@ -94,7 +95,10 @@ router.get("/", async (req, res) => {
     } else {
       suprimento = await Suprimento.find();
     }
-    return res.json(suprimento);
+    if(suprimento.disponivel !== false){
+      return res.json(suprimento);
+    }
+    
   } catch (err) {
     console.log(err.message);
     res.status(500).send("Server error");

@@ -17,6 +17,9 @@ const SuprimentoSchema = new mongoose.Schema({
         type: Boolean,
         required: true
     },
+    utilizado:{
+        type: Boolean
+    },
     data:{
         type: Date,
         default: Date.now
