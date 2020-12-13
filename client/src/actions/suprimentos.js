@@ -3,8 +3,10 @@ import {
   SUCESSO_INSERIR_SUPRIMENTO,
   FALHA_INSERIR_SUPRIMENTO,
   FALHA_OBTER_SUPRIMENTO,
+  FALHA_OBTER_TODOS_SUPRIMENTOS,
   OBTER_TODOS_SUPRIMENTOS,
   USUARIO_LOGADO,
+  OBTER_SUPRIMENTO,
 } from "./types";
 
 import { setAlert } from "./alert";
@@ -60,7 +62,32 @@ export const obterTodosSuprimentos = () => async (dispatch) => {
     }
 
     dispatch({
-      type: FALHA_OBTER_SUPRIMENTO,
+      type: FALHA_OBTER_TODOS_SUPRIMENTOS
     });
   }
 };
+
+export const obterSuprimento = (codigo) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify({codigo})
+  try {
+    const res = await axios.post("/api/suprimento/obtersuprimento", body, config)
+    dispatch({type: USUARIO_LOGADO})
+    dispatch({
+      type: OBTER_SUPRIMENTO,
+      payload: res.data
+    })
+  } catch (err) {
+    const erros = err.response.data.errors;
+    if (erros) {
+      erros.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+      dispatch({
+        type: FALHA_OBTER_SUPRIMENTO
+      })
+    }
+  }
+}

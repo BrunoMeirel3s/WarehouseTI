@@ -1,5 +1,4 @@
 import React, { Fragment, useState } from "react";
-import { Link, Redirect, Switch } from "react-router-dom";
 import Moment from "react-moment";
 import { connect } from "react-redux";
 import {
@@ -39,7 +38,7 @@ const Suprimentos = ({
 
   let suprimento;
   let i = 1;
-  if (todosSuprimentos) {
+  if (todosSuprimentos && todosSuprimentos.length >= 1) {
     suprimento = todosSuprimentos
       .map((suprimentos) => suprimentos)
       .map((sup) => (
@@ -53,6 +52,18 @@ const Suprimentos = ({
           </td>
         </tr>
       ));
+  } else if (todosSuprimentos) {
+    suprimento = (
+      <tr key={todosSuprimentos._id}>
+        <td>{i++}</td>
+        <td className="">{todosSuprimentos.codigo}</td>
+        <td>{todosSuprimentos.modelo}</td>
+        <td>{todosSuprimentos.cor}</td>
+        <td>
+          <Moment format="DD/MM/YYYY">{todosSuprimentos.data}</Moment>
+        </td>
+      </tr>
+    );
   }
 
   return (
@@ -60,8 +71,8 @@ const Suprimentos = ({
       <div className="mt-3">
         <h1>Administração de suprimentos</h1>
         <hr />
-        <h4>Registre novos Suprimentos:</h4>
-        <hr/>
+        <h4>Registro de Novos Suprimentos:</h4>
+        <hr />
         <form className="form" onSubmit={(e) => onSubmit(e)}>
           <div className="col-12 d-flex">
             <div className="form-group col-4">

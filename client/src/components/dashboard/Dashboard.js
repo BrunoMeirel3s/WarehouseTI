@@ -23,13 +23,13 @@ const Dashboard = (props) => {
             </div>
             <hr className="bg-white" />
             <ul className="menu-items">
-              <li className="activ">
-                <Link to="/trocatoner">Trocar Toner</Link>
+              <li id="registrartroca">
+                <Link to="/trocatoner">Registar Troca</Link>
               </li>
-              <li className="activ">
+              <li id="suprimentos">
                 <Link to="/suprimentos">Suprimentos</Link>
               </li>
-              <li className="activ">
+              <li id="relatorios">
                 <Link to="/relatorios">Relatórios</Link>
               </li>
             </ul>

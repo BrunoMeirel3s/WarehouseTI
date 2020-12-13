@@ -8,13 +8,14 @@ const Suprimento = require("../../models/Suprimento");
 // @desc   Update supply
 // @access Private
 router.put("/", auth, async (req, res) => {
-  const { codigo, modelo, cor, disponivel } = req.body;
+  const { codigo, modelo, cor, disponivel, utilizado } = req.body;
 
   const camposSuprimento = {};
   if (codigo) camposSuprimento.codigo = codigo;
   if (modelo) camposSuprimento.modelo = modelo;
   if (cor) camposSuprimento.cor = cor;
   if (disponivel) camposSuprimento.disponivel = disponivel;
+  if (utilizado) camposSuprimento.utilizado = utilizado;
 
   try {
     let suprimento = await Suprimento.findOne({ codigo });
@@ -73,7 +74,7 @@ router.post(
         modelo,
         cor,
         disponivel,
-        utilizado: false
+        utilizado: false,
       });
 
       await suprimento.save();
@@ -85,20 +86,30 @@ router.post(
   }
 );
 
-router.get("/disponivel", async (req, res) => {
+router.get("/disponivel", auth, async (req, res) => {
+  try {
+    let suprimentos = await Suprimento.find({ utilizado: false });
+    if (!suprimentos) {
+      return res.status(400).json({ msg: "Sem suprimentos disponíveis" });
+    }
+    return res.json(suprimentos);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
+router.post("/obtersuprimento", auth, async (req, res) => {
   const { codigo } = req.body;
   try {
-    let suprimento;
-
-    if (codigo) {
-      suprimento = await Suprimento.findOne({ codigo });
-    } else {
-      suprimento = await Suprimento.find();
+    let suprimento = await Suprimento.findOne({ codigo });
+    if (!suprimento) {
+      return res.status(400).json({ msg: "Suprimento não encontrado" });
     }
-    if(suprimento.disponivel !== false){
-      return res.json(suprimento);
+    if (suprimento.utilizado === true) {
+      return res.status(400).json({ msg: "Suprimento já utilizado" });
     }
-    
+    return res.json(suprimento);
   } catch (err) {
     console.log(err.message);
     res.status(500).send("Server error");
