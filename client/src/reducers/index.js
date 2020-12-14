@@ -6,9 +6,11 @@ import { combineReducers } from "redux";
 import alert from "./alert";
 import auth from "./auth";
 import suprimentos from "./suprimentos";
+import impressoras from './impressoras'
 
 export default combineReducers({
   auth,
   alert,
   suprimentos,
+  impressoras
 });

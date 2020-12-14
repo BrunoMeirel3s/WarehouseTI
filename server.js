@@ -30,9 +30,10 @@ app.use('/api/posts', require('./routes/api/posts'))
 /**
  * Here we have the routes that can be call at the browser and the responses
  * example: the url /api/users call the response from users.js
- */ app.use("/api/usuario", require("./routes/api/usuario"));
+ */
+app.use("/api/usuario", require("./routes/api/usuario"));
 app.use("/api/auth", require("./routes/api/auth"));
-app.use("/api/equipamento", require("./routes/api/impressora"));
+app.use("/api/impressora", require("./routes/api/impressora"));
 app.use("/api/suprimento", require("./routes/api/suprimento"));
 app.use("/api/registrotroca", require("./routes/api/registroTroca"));
 
