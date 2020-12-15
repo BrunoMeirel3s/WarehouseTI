@@ -7,10 +7,12 @@ import alert from "./alert";
 import auth from "./auth";
 import suprimentos from "./suprimentos";
 import impressoras from './impressoras'
+import registrartroca from './registrartroca'
 
 export default combineReducers({
   auth,
   alert,
   suprimentos,
-  impressoras
+  impressoras,
+  registrartroca
 });

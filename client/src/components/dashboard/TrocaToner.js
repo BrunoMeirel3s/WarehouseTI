@@ -1,31 +1,26 @@
 import React, { Fragment, useState } from "react";
-import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { obterSuprimento } from "../../actions/suprimentos";
-import {
-  obterImpressora,
-  obterImpressorasDisponiveis,
-} from "../../actions/impressoras";
+import { obterImpressorasDisponiveis } from "../../actions/impressoras";
+import { registrarTroca } from "../../actions/registrartroca";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 
 const Trocatoner = ({
   obterSuprimento,
   suprimento,
-  impressora,
-  obterImpressora,
   obterImpressorasDisponiveis,
   todasImpressoras,
+  registrarTroca,
 }) => {
   const [formData, setFormData] = useState({
     patrimonio: "",
     codigoToner: "",
     corToner: "",
     localizacao: "",
-    modeloImpressora: "",
+    modelo: "",
     enderecoIp: "",
     totalA3: "",
     totalA4: "",
@@ -36,44 +31,68 @@ const Trocatoner = ({
     codigoToner,
     corToner,
     localizacao,
-    modeloImpressora,
+    modelo,
     enderecoIp,
     totalA3,
     totalA4,
   } = formData;
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    registrarTroca(
+      patrimonio,
+      codigoToner,
+      corToner,
+      localizacao,
+      modelo,
+      enderecoIp,
+      totalA3,
+      totalA4
+    );
+  };
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  const onChangePatrimonio = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   const getSuprimento = async (e) => {
     e.preventDefault();
     obterSuprimento(codigoToner);
   };
 
   useEffect(() => {
-    obterImpressorasDisponiveis();
     if (suprimento) {
       setFormData({ ...formData, corToner: suprimento.cor });
     }
   }, [suprimento]);
-  let optionsSelectPatrimonio;
-  let i = 0;
+  useEffect(() => {
+    obterImpressorasDisponiveis();
+  }, []);
 
-  if (todasImpressoras && todasImpressoras.length >= 1) {
-    optionsSelectPatrimonio = todasImpressoras
-      .map((impressoras) => impressoras)
-      .map((imp) => {
-        <option value={imp.patrimonio}>Bruno</option>;
-        console.log(imp.patrimonio);
+  useEffect(() => {
+    if (todasImpressoras && patrimonio !== 0) {
+      todasImpressoras.map((imp) => {
+        if (imp.patrimonio === patrimonio) {
+          setFormData({
+            ...formData,
+            enderecoIp: imp.enderecoIp,
+            modelo: imp.modelo,
+            localizacao: imp.localizacao,
+          });
+        }
+        if (imp.patrimonio === patrimonio && !imp.enderecoIp) {
+          setFormData({
+            ...formData,
+            enderecoIp: "",
+            modelo: imp.modelo,
+            localizacao: imp.localizacao,
+          });
+        }
       });
-  } if (todasImpressoras) {
-    optionsSelectPatrimonio = (
-      <option value={todasImpressoras[0].patrimonio}>
-        {todasImpressoras[0].patrimonio}
-      </option>
-    );
-    console.log(todasImpressoras[0].patrimonio);
-  }
+    }
+  }, [patrimonio]);
+
   return (
     <Fragment>
       <div className="mt-3">
@@ -89,9 +108,20 @@ const Trocatoner = ({
               className="form-control"
               name="patrimonio"
               value={patrimonio}
-              onChange={(e) => onChange(e)}
+              onChange={(e) => onChangePatrimonio(e)}
             >
-              {optionsSelectPatrimonio}
+              <option value={0}> - Selecione</option>
+              {todasImpressoras && todasImpressoras.length > 0 ? (
+                todasImpressoras.map((impressora) => {
+                  return (
+                    <option key={impressora._id} value={impressora.patrimonio}>
+                      {impressora.patrimonio}
+                    </option>
+                  );
+                })
+              ) : (
+                <option value={0}>Não Disponível</option>
+              )}
             </select>
           </div>
           <div className="form-group col-4">
@@ -106,6 +136,7 @@ const Trocatoner = ({
                   name="codigoToner"
                   value={codigoToner}
                   onChange={(e) => onChange(e)}
+                  required
                 />
                 <div className="input-group-prepend">
                   <button type="submit" className="btn btn-red">
@@ -116,7 +147,7 @@ const Trocatoner = ({
             </form>
           </div>
         </div>
-        <form action="">
+        <form onSubmit={onSubmit}>
           <div className="col-12 mb-2 d-flex">
             <div className="col-4">
               <label className="label" for="patrimonio">
@@ -127,15 +158,20 @@ const Trocatoner = ({
                 className="form-control"
                 name="corToner"
                 value={corToner}
-                onChange={(e) => onChange(e)}
-                disabled
+                readOnly
               />
             </div>
             <div className="form-group col-7">
               <label className="label" for="patrimonio">
                 Localização:
               </label>
-              <input type="text" className="form-control" id="localizacao" />
+              <input
+                type="text"
+                className="form-control"
+                id="localizacao"
+                value={localizacao}
+                readOnly
+              />
             </div>
           </div>
 
@@ -148,8 +184,8 @@ const Trocatoner = ({
                 type="text"
                 className="form-control"
                 name="modeloImpressora"
-                value={modeloImpressora}
-                onChange={(e) => onChange(e)}
+                value={modelo}
+                readOnly
               />
             </div>
             <div className="form-group col-4">
@@ -161,7 +197,7 @@ const Trocatoner = ({
                 className="form-control"
                 name="enderecoIp"
                 value={enderecoIp}
-                onChange={(e) => onChange(e)}
+                readOnly
               />
             </div>
           </div>
@@ -179,6 +215,7 @@ const Trocatoner = ({
                 name="totalA4"
                 value={totalA4}
                 onChange={(e) => onChange(e)}
+                required
               />
             </div>
             <div className="form-group col-4">
@@ -191,6 +228,7 @@ const Trocatoner = ({
                 name="totalA3"
                 value={totalA3}
                 onChange={(e) => onChange(e)}
+                required
               />
             </div>
           </div>
@@ -213,16 +251,15 @@ const Trocatoner = ({
 };
 Trocatoner.propTypes = {
   obterSuprimento: PropTypes.func.isRequired,
-  obterImpressora: PropTypes.func.isRequired,
   obterImpressorasDisponiveis: PropTypes.func.isRequired,
+  registrarTroca: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   suprimento: state.suprimentos.suprimento,
-  impressora: state.impressoras.impressora,
   todasImpressoras: state.impressoras.todasImpressoras,
 });
 export default connect(mapStateToProps, {
   obterSuprimento,
-  obterImpressora,
   obterImpressorasDisponiveis,
+  registrarTroca,
 })(Trocatoner);

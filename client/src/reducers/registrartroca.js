@@ -1,6 +1,6 @@
 import{
-    SUCESSO_TROCA_TONER,
-    FALHA_TROCA_TONER
+    SUCESSO_REGISTRAR_TROCA,
+    FALHA_REGISTRAR_TROCA
 } from '../actions/types'
 
 const estadosIniciais = {
@@ -10,10 +10,17 @@ const estadosIniciais = {
 export default function(state= estadosIniciais, action){
     const {type, payload} = action;
     switch(type){
-        case SUCESSO_TROCA_TONER:
+        case SUCESSO_REGISTRAR_TROCA:
             return{
                 ...state,
                 registro: payload 
             }
+        case FALHA_REGISTRAR_TROCA:
+            return{
+                ...state,
+                registro: null
+            }
+        default:
+            return state    
     }
 }

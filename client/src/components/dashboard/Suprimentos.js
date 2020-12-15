@@ -31,40 +31,10 @@ const Suprimentos = ({
     inserirSuprimento(codigo, modelo, disponivel, cor);
     setFormData({ ...formData, codigo: " " });
   };
-
+  let i=1;
   useEffect(() => {
     obterTodosSuprimentos();
   }, []);
-
-  let suprimento;
-  let i = 1;
-  if (todosSuprimentos && todosSuprimentos.length >= 1) {
-    suprimento = todosSuprimentos
-      .map((suprimentos) => suprimentos)
-      .map((sup) => (
-        <tr key={sup._id}>
-          <td>{i++}</td>
-          <td className="">{sup.codigo}</td>
-          <td>{sup.modelo}</td>
-          <td>{sup.cor}</td>
-          <td>
-            <Moment format="DD/MM/YYYY">{sup.data}</Moment>
-          </td>
-        </tr>
-      ));
-  } else if (todosSuprimentos) {
-    suprimento = (
-      <tr key={todosSuprimentos._id}>
-        <td>{i++}</td>
-        <td className="">{todosSuprimentos.codigo}</td>
-        <td>{todosSuprimentos.modelo}</td>
-        <td>{todosSuprimentos.cor}</td>
-        <td>
-          <Moment format="DD/MM/YYYY">{todosSuprimentos.data}</Moment>
-        </td>
-      </tr>
-    );
-  }
 
   return (
     <Fragment>
@@ -155,7 +125,27 @@ const Suprimentos = ({
               <th scope="col">Data de Inserção</th>
             </tr>
           </thead>
-          <tbody>{suprimento}</tbody>
+          <tbody>
+            {todosSuprimentos && todosSuprimentos.length > 0 ? (
+              todosSuprimentos.map((sup) => {
+                return(
+                <tr key={sup._id}>
+                  <td>{i++}</td>
+                  <td className="">{sup.codigo}</td>
+                  <td>{sup.modelo}</td>
+                  <td>{sup.cor}</td>
+                  <td>
+                    <Moment format="DD/MM/YYYY">{sup.data}</Moment>
+                  </td>
+                </tr>
+                )
+              })
+            ) : (
+              <tr>
+                <td colSpan={3}>Sem suprimentos disponíveis</td>
+              </tr>
+            )}
+          </tbody>
         </table>
       </div>
     </Fragment>
