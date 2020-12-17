@@ -29,6 +29,7 @@ export const inserirSuprimento = (codigo, modelo, disponivel, cor) => async (
       type: SUCESSO_INSERIR_SUPRIMENTO,
       payload: res.data,
     });
+    dispatch(setAlert("Suprimento inserido com sucesso!", "success"))
 
     const resTodosSuprimentos = await axios.get("/api/suprimento/disponivel")
     dispatch({
@@ -39,6 +40,8 @@ export const inserirSuprimento = (codigo, modelo, disponivel, cor) => async (
     const erros = err.response.data.errors;
     if (erros) {
       erros.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+    }else{
+      dispatch(setAlert(err.response.data, "danger"))
     }
 
     dispatch({

@@ -4,7 +4,8 @@ import{
 } from '../actions/types'
 
 const estadosIniciais = {
-    registro: null
+    registro: null,
+    sucessoRegistrarTroca: null
 }
 
 export default function(state= estadosIniciais, action){
@@ -13,12 +14,14 @@ export default function(state= estadosIniciais, action){
         case SUCESSO_REGISTRAR_TROCA:
             return{
                 ...state,
-                registro: payload 
+                registro: payload,
+                sucessoRegistrarTroca: true
             }
         case FALHA_REGISTRAR_TROCA:
             return{
                 ...state,
-                registro: null
+                registro: null,
+                sucessoRegistrarTroca: false
             }
         default:
             return state    

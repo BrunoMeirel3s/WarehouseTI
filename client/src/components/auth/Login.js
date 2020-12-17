@@ -7,6 +7,7 @@ import { Card, Container, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faKey } from "@fortawesome/free-solid-svg-icons";
 import img from "../imgs/icon-white.png";
+import Alert from '../layout/Alert'
 
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -75,12 +76,14 @@ const Login = ({ login, isAuthenticated }) => {
                     required
                   />
                 </div>
+                <Alert/>
                 <div className="form-group" align="center">
                   <input
                     type="submit"
                     value="Entrar"
                     className="btn btn-lg btn-red"
                   />
+                  
                 </div>
               </form>
             </div>

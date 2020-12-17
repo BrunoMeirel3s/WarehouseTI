@@ -7,6 +7,7 @@ import { obterImpressorasDisponiveis } from "../../actions/impressoras";
 import { registrarTroca } from "../../actions/registrartroca";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
+import Alert from '../layout/Alert'
 
 const Trocatoner = ({
   obterSuprimento,
@@ -96,11 +97,11 @@ const Trocatoner = ({
   return (
     <Fragment>
       <div className="mt-3">
-        <h2>Registrar troca de toner:</h2>
+        <h1>Registrar Troca de Toner:</h1>
         <hr />
-
+        <Alert/>
         <div className="col-12 d-flex">
-          <div className="form-group col-4">
+          <div className="col-4">
             <label className="label" for="patrimonio">
               Patrimônio
             </label>
@@ -136,6 +137,7 @@ const Trocatoner = ({
                   name="codigoToner"
                   value={codigoToner}
                   onChange={(e) => onChange(e)}
+                  readOnly={corToner}
                   required
                 />
                 <div className="input-group-prepend">

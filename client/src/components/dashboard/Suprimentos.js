@@ -7,6 +7,7 @@ import {
 } from "../../actions/suprimentos";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
+import Alert from '../layout/Alert'
 
 const Suprimentos = ({
   inserirSuprimento,
@@ -43,6 +44,7 @@ const Suprimentos = ({
         <hr />
         <h4>Registro de Novos Suprimentos:</h4>
         <hr />
+        <Alert/>
         <form className="form" onSubmit={(e) => onSubmit(e)}>
           <div className="col-12 d-flex">
             <div className="form-group col-4">

@@ -54,6 +54,8 @@ export const login = (matricula, senha) => async (dispatch) => {
 
     if (erros) {
       erros.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+    }else{
+      dispatch(setAlert("Usuário ou senha incorretos", "danger"))
     }
 
     dispatch({

@@ -17,10 +17,10 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Fragment>
-          <Alert />
           <Route exact path="/" component={Login} />
           <Route exact path="/trocatoner" component={Dashboard} />
           <Route exact path="/suprimentos" component={Dashboard} />
+          <Route exact path="/relatorios" component={Dashboard} />
         </Fragment>
       </Router>
     </Provider>

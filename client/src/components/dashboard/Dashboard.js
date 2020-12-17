@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PrivateRoute from "../routing/PrivateRoute";
 import Trocatoner from "./TrocaToner";
 import Suprimentos from "./Suprimentos";
+import Relatorios from './Relatorios'
 import img from "../imgs/icon-white.png";
 
 const Dashboard = (props) => {
@@ -23,13 +24,13 @@ const Dashboard = (props) => {
             </div>
             <hr className="bg-white" />
             <ul className="menu-items">
-              <li id="registrartroca">
-                <Link to="/trocatoner">Registar Troca</Link>
+              <li className="menu-item" id="registrartroca">
+                <Link to="/trocatoner">Registrar Troca</Link>
               </li>
-              <li id="suprimentos">
+              <li className="menu-item" id="suprimentos">
                 <Link to="/suprimentos">Suprimentos</Link>
               </li>
-              <li id="relatorios">
+              <li className="menu-item" id="relatorios">
                 <Link to="/relatorios">Relatórios</Link>
               </li>
             </ul>
@@ -39,6 +40,7 @@ const Dashboard = (props) => {
             <Switch>
               <Route exact path="/trocatoner" component={Trocatoner} />
               <Route exact path="/suprimentos" component={Suprimentos} />
+              <Route exact path="/relatorios" component={Relatorios} />
             </Switch>
           </div>
         </div>

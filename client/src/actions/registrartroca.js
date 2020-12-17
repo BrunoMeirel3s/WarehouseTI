@@ -34,6 +34,7 @@ export const registrarTroca = (
         type: SUCESSO_REGISTRAR_TROCA,
         payload: res.data
     })
+    dispatch(setAlert("Registro inserido com sucesso!", "success"))
   } catch (err) {
     const erros = err.response.data.errors;
     if (erros) {
