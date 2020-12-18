@@ -74,4 +74,38 @@ router.post(
   }
 );
 
+// @route  POST api/registrotroca/relatorio
+// @desc   Insert a register of toner change
+// @access Private
+router.post(
+  "/relatorio",
+  [
+    check("dataInicial", "Insira a data inicial").not().isEmpty(),
+    check("dataFinal", "Insira a data final").not().isEmpty(),
+  ],
+  async (req, res) => {
+    const erros = validationResult(req);
+    if (!erros.isEmpty()) {
+      return res.status(400).json({ erros: erros.array() });
+    }
+    const { dataInicial, dataFinal } = req.body;
+    try {
+      let relatorio = await RegistroTroca.find({
+        date: { $gte: dataInicial, $lte: dataFinal },
+      });
+      if (relatorio.length < 1) {
+        return res.status(400).json({
+          msg: "Não foram encontradas trocas durante o período informado!",
+        });
+      }
+      if (relatorio) {
+        return res.json(relatorio);
+      }
+    } catch (err) {
+      console.log(err.message);
+      res.status(500).send("Server error");
+    }
+  }
+);
+
 module.exports = router;

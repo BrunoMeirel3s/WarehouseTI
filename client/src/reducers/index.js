@@ -8,11 +8,13 @@ import auth from "./auth";
 import suprimentos from "./suprimentos";
 import impressoras from './impressoras'
 import registrartroca from './registrartroca'
+import relatorio from './relatorio'
 
 export default combineReducers({
   auth,
   alert,
   suprimentos,
   impressoras,
-  registrartroca
+  registrartroca,
+  relatorio
 });

@@ -26,6 +26,7 @@ body {
   background: rgb(199, 9, 18) !important;
   color: white;
   max-height: 400px;
+  min-height: 400px;
 }
 
 .menu-items li {

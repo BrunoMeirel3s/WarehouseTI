@@ -1,16 +1,19 @@
-import React, { Fragment, useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import { Container } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PrivateRoute from "../routing/PrivateRoute";
 import Trocatoner from "./TrocaToner";
 import Suprimentos from "./Suprimentos";
-import Relatorios from './Relatorios'
+import Relatorios from "./Relatorios";
+import { logout } from "../../actions/auth";
 import img from "../imgs/icon-white.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import PropTypes from "prop-types";
 
-const Dashboard = (props) => {
+const Dashboard = ({isAuthenticated, logout}) => {
   return (
     <Fragment>
       <Container>
@@ -33,14 +36,19 @@ const Dashboard = (props) => {
               <li className="menu-item" id="relatorios">
                 <Link to="/relatorios">Relatórios</Link>
               </li>
+              <li className="menu-item" id="relatorios">
+                <Link className="menu-item" to="/" onClick={logout}>
+                  <FontAwesomeIcon icon={faSignOutAlt} /> <span>Logout</span>
+                </Link>
+              </li>
             </ul>
           </nav>
 
           <div className="content col-8 mt-5">
             <Switch>
-              <Route exact path="/trocatoner" component={Trocatoner} />
-              <Route exact path="/suprimentos" component={Suprimentos} />
-              <Route exact path="/relatorios" component={Relatorios} />
+              <PrivateRoute exact path="/trocatoner" component={Trocatoner} />
+              <PrivateRoute exact path="/suprimentos" component={Suprimentos} />
+              <PrivateRoute exact path="/relatorios" component={Relatorios} />
             </Switch>
           </div>
         </div>
@@ -49,4 +57,13 @@ const Dashboard = (props) => {
   );
 };
 
-export default Dashboard;
+
+Dashboard.propTypes = {
+  logout: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+export default connect(mapStateToProps, { logout })(Dashboard);
