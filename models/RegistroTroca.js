@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const RegistroTrocaSchema = new mongoose.Schema({
   usuario: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "usuarios"
+    type: String,
+      required: true
   },
   codigoToner:{
       type: String,

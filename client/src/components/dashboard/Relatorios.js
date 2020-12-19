@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
+import Moment from "react-moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
@@ -16,7 +17,6 @@ const Relatorios = ({
   });
 
   const { dataInicial, dataFinal } = formData;
-  let i = 1;
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -31,7 +31,7 @@ const Relatorios = ({
       <div className="mt-3">
         <h1>Relatório de Trocas:</h1>
         <hr />
-        {/*<Alert />*/}
+        <Alert />
         <div className="col-12 d-flex">
           <form className="form-group d-flex" onSubmit={(e) => onSubmit(e)}>
             <div className="col-5">
@@ -69,12 +69,18 @@ const Relatorios = ({
             </div>
           </form>
         </div>
-        <div className="col-12 d-flex">
+        <div className="col-12">
+          {relatorio && relatorio.length > 0 ? <hr /> : ""}
+          {relatorio && relatorio.length > 0 ? (
+            <h4>Trocas Registradas no período:</h4>
+          ) : (
+            ""
+          )}
           {relatorio && relatorio.length > 0 ? (
             <table className="table">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
+                  <th scope="col">Data</th>
                   <th scope="col">Patrimônio</th>
                   <th scope="col">Modelo</th>
                   <th scope="col">Localização</th>
@@ -88,7 +94,9 @@ const Relatorios = ({
                 {relatorio.map((rel) => {
                   return (
                     <tr key={rel._id}>
-                      <td>{i++}</td>
+                      <td>
+                        <Moment format="DD/MM/YYYY">{rel.date}</Moment>
+                      </td>
                       <td>{rel.patrimonio}</td>
                       <td>{rel.modeloImpressora}</td>
                       <td>{rel.localizacao}</td>
@@ -102,9 +110,9 @@ const Relatorios = ({
               </tbody>
             </table>
           ) : (
-            <div className="col-12 d-flex bg-info">
-              Selecione um período para exibição
-            </div>
+            <span className="ml-3 bg-danger text-light pr-2">
+              * Selecione um período para exibir{" "}
+            </span>
           )}
         </div>
       </div>

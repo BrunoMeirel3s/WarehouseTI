@@ -7,7 +7,7 @@ import {
 } from "../../actions/suprimentos";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
-import Alert from '../layout/Alert'
+import Alert from "../layout/Alert";
 
 const Suprimentos = ({
   inserirSuprimento,
@@ -32,7 +32,7 @@ const Suprimentos = ({
     inserirSuprimento(codigo, modelo, disponivel, cor);
     setFormData({ ...formData, codigo: " " });
   };
-  let i=1;
+  let i = 1;
   useEffect(() => {
     obterTodosSuprimentos();
   }, []);
@@ -44,7 +44,7 @@ const Suprimentos = ({
         <hr />
         <h4>Registro de Novos Suprimentos:</h4>
         <hr />
-        <Alert/>
+        <Alert />
         <form className="form" onSubmit={(e) => onSubmit(e)}>
           <div className="col-12 d-flex">
             <div className="form-group col-4">
@@ -117,38 +117,38 @@ const Suprimentos = ({
       </div>
       <div className="mt-1">
         <h4>Suprimentos Disponíveis:</h4>
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Código </th>
-              <th scope="col">Modelo </th>
-              <th scope="col">Cor </th>
-              <th scope="col">Data de Inserção</th>
-            </tr>
-          </thead>
-          <tbody>
-            {todosSuprimentos && todosSuprimentos.length > 0 ? (
-              todosSuprimentos.map((sup) => {
-                return(
-                <tr key={sup._id}>
-                  <td>{i++}</td>
-                  <td className="">{sup.codigo}</td>
-                  <td>{sup.modelo}</td>
-                  <td>{sup.cor}</td>
-                  <td>
-                    <Moment format="DD/MM/YYYY">{sup.data}</Moment>
-                  </td>
-                </tr>
-                )
-              })
-            ) : (
+        {todosSuprimentos && todosSuprimentos.length > 0 ? (
+          <table className="table">
+            <thead>
               <tr>
-                <td colSpan={3}>Sem suprimentos disponíveis</td>
+                <th scope="col">#</th>
+                <th scope="col">Código </th>
+                <th scope="col">Modelo </th>
+                <th scope="col">Cor </th>
+                <th scope="col">Data de Inserção</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {todosSuprimentos.map((sup) => {
+                return (
+                  <tr key={sup._id}>
+                    <td>{i++}</td>
+                    <td className="">{sup.codigo}</td>
+                    <td>{sup.modelo}</td>
+                    <td>{sup.cor}</td>
+                    <td>
+                      <Moment format="DD/MM/YYYY">{sup.data}</Moment>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        ) : (
+          <span className="ml-3 bg-danger text-light pr-2">
+            * Sem suprimentos disponíveis para utilização
+          </span>
+        )}
       </div>
     </Fragment>
   );

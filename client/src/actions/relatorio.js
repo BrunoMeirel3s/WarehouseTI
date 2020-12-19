@@ -22,7 +22,7 @@ export const obterRelatorio = (dataInicial, dataFinal) => async (dispatch) => {
     if (erros) {
       erros.forEach((error) => dispatch(setAlert(error.msg, "danger")));
     }else{
-      dispatch(setAlert(err.response.data, "danger"))
+      dispatch(setAlert("Não foram encontrados registros no período informado", "danger"))
     }
     dispatch({
         type: FALHA_OBTER_TROCAS

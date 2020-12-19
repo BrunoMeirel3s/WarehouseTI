@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import {Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { login } from "../../actions/auth";
 import PropTypes from "prop-types";
-import { Card, Container, Row, Col } from "react-bootstrap";
+import {Container} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faKey } from "@fortawesome/free-solid-svg-icons";
 import img from "../imgs/icon-white.png";

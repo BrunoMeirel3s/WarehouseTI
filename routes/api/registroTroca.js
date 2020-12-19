@@ -3,6 +3,7 @@ const router = express.Router();
 const auth = require("../../middleware/auth");
 const { check, validationResult } = require("express-validator/check");
 const RegistroTroca = require("../../models/RegistroTroca");
+const Usuario = require("../../models/Usuario");
 
 // @route  POST api/registrotroca
 // @desc   Insert a register of toner change
@@ -53,7 +54,15 @@ router.post(
     } = req.body;
 
     const camposRegistro = {};
-    camposRegistro.usuario = req.usuario.id;
+    let usuario
+    try {
+      usuario = await Usuario.findById(req.usuario.id, {nome:1})
+    } catch (err) {
+      console.log(err.message);
+      res.status(500).send("Server error");
+    }
+    camposRegistro.usuario = usuario.nome;
+
     if (codigoToner) camposRegistro.codigoToner = codigoToner;
     if (corToner) camposRegistro.corToner = corToner;
     if (patrimonio) camposRegistro.patrimonio = patrimonio;
@@ -93,11 +102,13 @@ router.post(
       let relatorio = await RegistroTroca.find({
         date: { $gte: dataInicial, $lte: dataFinal },
       });
+
       if (relatorio.length < 1) {
         return res.status(400).json({
           msg: "Não foram encontradas trocas durante o período informado!",
         });
       }
+
       if (relatorio) {
         return res.json(relatorio);
       }

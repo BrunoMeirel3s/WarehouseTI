@@ -10,15 +10,15 @@ import Relatorios from "./Relatorios";
 import { logout } from "../../actions/auth";
 import img from "../imgs/icon-white.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { faSignOutAlt, faBoxes, faQrcode, faClipboardCheck } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 
 const Dashboard = ({isAuthenticated, logout}) => {
   return (
     <Fragment>
       <Container>
-        <div className="row">
-          <nav className="menu col-3 mt-5">
+        <div className="row container">
+          <nav className="menu col-2 mt-5">
             <div className="logo d-flex flex-column align-items-center">
               <div className="mt-4">
                 <img src={img} alt="Ícone" style={{ width: "60px" }} />
@@ -27,15 +27,24 @@ const Dashboard = ({isAuthenticated, logout}) => {
             </div>
             <hr className="bg-white" />
             <ul className="menu-items">
-              <li className="menu-item" id="registrartroca">
-                <Link to="/trocatoner">Registrar Troca</Link>
+              <li className="menu-item active" id="registrartroca">
+                <Link to="/trocatoner">
+                <FontAwesomeIcon icon={faQrcode} /> <span>Registrar Troca</span>
+                </Link>
               </li>
+              <hr className="hr"/>
               <li className="menu-item" id="suprimentos">
-                <Link to="/suprimentos">Suprimentos</Link>
+                <Link to="/suprimentos">
+                <FontAwesomeIcon icon={faBoxes} /> <span>Suprimentos</span>
+                </Link>
               </li>
+              <hr className="hr"/>
               <li className="menu-item" id="relatorios">
-                <Link to="/relatorios">Relatórios</Link>
+                <Link to="/relatorios">
+                <FontAwesomeIcon icon={faClipboardCheck} /> <span>Relatórios</span>
+                </Link>
               </li>
+              <hr className="hr"/>
               <li className="menu-item" id="relatorios">
                 <Link className="menu-item" to="/" onClick={logout}>
                   <FontAwesomeIcon icon={faSignOutAlt} /> <span>Logout</span>
