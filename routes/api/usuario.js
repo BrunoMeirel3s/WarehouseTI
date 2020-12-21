@@ -11,7 +11,6 @@ const { check, validationResult } = require("express-validator/check");
 const Usuario = require("../../models/Usuario");
 const auth = require("../../middleware/auth");
 
-
 router.put("/", auth, async (req, res) => {
   const { nome, matricula, senha, ativo } = req.body;
 
@@ -26,7 +25,7 @@ router.put("/", auth, async (req, res) => {
   if (ativo) camposUsuario.ativo = ativo;
 
   try {
-    let usuario = await Usuario.findOne({ matricula});
+    let usuario = await Usuario.findOne({ matricula });
     if (usuario) {
       usuario = await Usuario.findOneAndUpdate(
         { matricula: req.body.matricula },
@@ -34,8 +33,8 @@ router.put("/", auth, async (req, res) => {
         { new: true }
       );
       return res.json(usuario);
-    }else{
-       return res.send("Usuário não encontrado")
+    } else {
+      return res.send("Usuário não encontrado");
     }
   } catch (err) {
     console.error(err.message);
@@ -54,6 +53,7 @@ router.put("/", auth, async (req, res) => {
 router.post(
   "/",
   [
+    check("ativo", "Informe se o colaborador está ativo").not().isEmpty(),
     check("nome", "Insira o nome do colaborador").not().isEmpty(),
     check("matricula", "Insira a matrícula do colaborador").not().isEmpty(),
     check("senha", "Insira uma senha com mais de 6 caracteres").isLength({
@@ -137,5 +137,17 @@ router.post(
     }
   }
 );
+
+router.get("/", async (req, res) => {
+  try {
+    let usuarios = await Usuario.find();
+    if (usuarios) {
+      return res.json(usuarios);
+    }
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server error");
+  }
+});
 
 module.exports = router;

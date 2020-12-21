@@ -6,9 +6,10 @@ import { combineReducers } from "redux";
 import alert from "./alert";
 import auth from "./auth";
 import suprimentos from "./suprimentos";
-import impressoras from './impressoras'
-import registrartroca from './registrartroca'
-import relatorio from './relatorio'
+import impressoras from "./impressoras";
+import registrartroca from "./registrartroca";
+import relatorio from "./relatorio";
+import usuarios from "./usuarios";
 
 export default combineReducers({
   auth,
@@ -16,5 +17,6 @@ export default combineReducers({
   suprimentos,
   impressoras,
   registrartroca,
-  relatorio
+  relatorio,
+  usuarios,
 });

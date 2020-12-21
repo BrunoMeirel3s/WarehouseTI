@@ -43,7 +43,6 @@ const Suprimentos = ({
         <h1>Administração de suprimentos</h1>
         <hr />
         <h4>Registro de Novos Suprimentos:</h4>
-        <hr />
         <Alert />
         <form className="form" onSubmit={(e) => onSubmit(e)}>
           <div className="col-12 d-flex">
@@ -115,7 +114,7 @@ const Suprimentos = ({
         </form>
         <hr />
       </div>
-      <div className="mt-1">
+      <div className="mt-1 col-12">
         <h4>Suprimentos Disponíveis:</h4>
         {todosSuprimentos && todosSuprimentos.length > 0 ? (
           <table className="table">

@@ -7,13 +7,20 @@ import PrivateRoute from "../routing/PrivateRoute";
 import Trocatoner from "./TrocaToner";
 import Suprimentos from "./Suprimentos";
 import Relatorios from "./Relatorios";
+import Administracao from "./Administracao";
 import { logout } from "../../actions/auth";
 import img from "../imgs/icon-white.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOutAlt, faBoxes, faQrcode, faClipboardCheck } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSignOutAlt,
+  faBoxes,
+  faQrcode,
+  faClipboardCheck,
+  faWrench,
+} from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 
-const Dashboard = ({isAuthenticated, logout}) => {
+const Dashboard = ({ isAuthenticated, logout }) => {
   return (
     <Fragment>
       <Container>
@@ -27,24 +34,32 @@ const Dashboard = ({isAuthenticated, logout}) => {
             </div>
             <hr className="bg-white" />
             <ul className="menu-items">
-              <li className="menu-item active" id="registrartroca">
+              <li className="menu-item menu-active" id="registrartroca">
                 <Link to="/trocatoner">
-                <FontAwesomeIcon icon={faQrcode} /> <span>Registrar Troca</span>
+                  <FontAwesomeIcon icon={faQrcode} />{" "}
+                  <span>Registrar Troca</span>
                 </Link>
               </li>
-              <hr className="hr"/>
+              <hr className="hr" />
               <li className="menu-item" id="suprimentos">
                 <Link to="/suprimentos">
-                <FontAwesomeIcon icon={faBoxes} /> <span>Suprimentos</span>
+                  <FontAwesomeIcon icon={faBoxes} /> <span>Suprimentos</span>
                 </Link>
               </li>
-              <hr className="hr"/>
+              <hr className="hr" />
               <li className="menu-item" id="relatorios">
                 <Link to="/relatorios">
-                <FontAwesomeIcon icon={faClipboardCheck} /> <span>Relatórios</span>
+                  <FontAwesomeIcon icon={faClipboardCheck} />{" "}
+                  <span>Relatórios</span>
                 </Link>
               </li>
-              <hr className="hr"/>
+              <hr className="hr" />
+              <li className="menu-item" id="relatorios">
+                <Link to="/administracao">
+                  <FontAwesomeIcon icon={faWrench} /> <span>Administração</span>
+                </Link>
+              </li>
+              <hr className="hr" />
               <li className="menu-item" id="relatorios">
                 <Link className="menu-item" to="/" onClick={logout}>
                   <FontAwesomeIcon icon={faSignOutAlt} /> <span>Logout</span>
@@ -57,6 +72,11 @@ const Dashboard = ({isAuthenticated, logout}) => {
             <Switch>
               <PrivateRoute exact path="/trocatoner" component={Trocatoner} />
               <PrivateRoute exact path="/suprimentos" component={Suprimentos} />
+              <PrivateRoute
+                exact
+                path="/administracao"
+                component={Administracao}
+              />
               <PrivateRoute exact path="/relatorios" component={Relatorios} />
             </Switch>
           </div>
@@ -66,13 +86,12 @@ const Dashboard = ({isAuthenticated, logout}) => {
   );
 };
 
-
 Dashboard.propTypes = {
   logout: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
 });
 export default connect(mapStateToProps, { logout })(Dashboard);
