@@ -1,10 +1,14 @@
 import {
   SUCESSO_REGISTRO_USUARIO,
   FALHA_REGISTRO_USUARIO,
+  SUCESSO_OBTER_TODOS_USUARIOS,
+  FALHA_OBTER_TODOS_USUARIOS,
 } from "../actions/types";
 const estadosIniciais = {
-  usuario: null,
+  usuarioRegistrado: null,
   sucessoRegistroUsuario: null,
+  todosUsuarios: null,
+  sucessoTodosUsuarios: null,
 };
 
 export default function (state = estadosIniciais, action) {
@@ -14,14 +18,26 @@ export default function (state = estadosIniciais, action) {
     case SUCESSO_REGISTRO_USUARIO:
       return {
         ...state,
-        usuario: payload,
+        usuarioRegistrado: payload,
         sucessoRegistroUsuario: true,
       };
     case FALHA_REGISTRO_USUARIO:
       return {
         ...state,
-        usuario: null,
+        usuarioRegistrado: null,
         sucessoRegistroUsuario: false,
+      };
+    case SUCESSO_OBTER_TODOS_USUARIOS:
+      return {
+        ...state,
+        todosUsuarios: payload,
+        sucessoTodosUsuarios: true,
+      };
+    case FALHA_OBTER_TODOS_USUARIOS:
+      return {
+        ...state,
+        todosUsuarios: null,
+        sucessoTodosUsuarios: false,
       };
     default:
       return state;

@@ -3,12 +3,19 @@ import Moment from "react-moment";
 import { connect } from "react-redux";
 import Alert from "../../layout/Alert";
 import PropTypes from "prop-types";
-import { inserirUsuario } from "../../../actions/usuarios";
-import { obterRelatorio } from "../../../actions/relatorio";
+import { inserirUsuario, obterTodosUsuarios } from "../../../actions/usuarios";
+import { setAlert } from "../../../actions/alert";
 
 const Usuarios = ({
+  setAlert,
   inserirUsuario,
-  usuarios: { usuario, sucessoRegistroUsuario },
+  obterTodosUsuarios,
+  usuarios: {
+    usuarioRegistrado,
+    sucessoRegistroUsuario,
+    todosUsuarios,
+    sucessoTodosUsuarios,
+  },
 }) => {
   const [formData, setFormData] = useState({
     ativo: "true",
@@ -30,6 +37,20 @@ const Usuarios = ({
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (senha !== confirmarSenha) {
+      setAlert("Senha e confirmação de senha não correspondem!", "danger");
+    } else {
+      inserirUsuario(nome, matricula, senha, ativo, administrador);
+      setFormData({
+        ...formData,
+        ativo: "true",
+        nome: "",
+        matricula: "",
+        senha: "",
+        confirmarSenha: "",
+        administrador: "false",
+      });
+    }
   };
 
   const onChange = (e) =>
@@ -37,10 +58,10 @@ const Usuarios = ({
 
   return (
     <Fragment>
-      <h1>Administração de Usuários</h1>
-      <hr />
-      <h4>Criar Novo Usuário:</h4>
-      <form className="form">
+      <div className="mt-2">
+        <Alert />
+      </div>
+      <form className="form mt-2" onSubmit={(e) => onSubmit(e)}>
         <div className="col-12 d-flex">
           <div className="form-group col-4">
             <label className="label">Ativo</label>
@@ -136,10 +157,12 @@ const Usuarios = ({
 };
 
 Usuarios.propTypes = {
+  setAlert: PropTypes.func.isRequired,
   inserirUsuario: PropTypes.func.isRequired,
+  obterTodosUsuarios: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   usuarios: state.usuarios,
 });
-export default connect(mapStateToProps, { inserirUsuario })(Usuarios);
+export default connect(mapStateToProps, { setAlert, inserirUsuario })(Usuarios);

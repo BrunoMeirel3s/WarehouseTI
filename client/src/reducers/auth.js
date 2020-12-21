@@ -26,7 +26,6 @@ export default function (state = estadosIniciais, action) {
         loading: false,
         usuario: payload,
       };
-    case SUCESSO_REGISTRO_USUARIO:
     case SUCESSO_LOGIN:
       localStorage.setItem("token", payload.token);
       return {
@@ -36,7 +35,6 @@ export default function (state = estadosIniciais, action) {
       };
     case FALHA_LOGIN:
     case ERRO_AUTENTICACAO:
-    case FALHA_REGISTRO_USUARIO:
     case LOGOUT:
       localStorage.removeItem("token");
       return {
