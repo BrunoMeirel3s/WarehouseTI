@@ -3,6 +3,9 @@ import Moment from "react-moment";
 import { connect } from "react-redux";
 import Alert from "../../layout/Alert";
 import PropTypes from "prop-types";
+import { useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { inserirUsuario, obterTodosUsuarios } from "../../../actions/usuarios";
 import { setAlert } from "../../../actions/alert";
 
@@ -25,6 +28,7 @@ const Usuarios = ({
     confirmarSenha: "",
     administrador: "false",
   });
+  let i = 1;
 
   const {
     ativo,
@@ -34,6 +38,10 @@ const Usuarios = ({
     confirmarSenha,
     administrador,
   } = formData;
+
+  useEffect(() => {
+    obterTodosUsuarios();
+  }, []);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -56,9 +64,22 @@ const Usuarios = ({
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  const editarUsuario = (usuario) => {
+    document.getElementById("matricula").disabled = true;
+    document.getElementById("registrar").text = "Atualizar";
+    setFormData({
+      ...formData,
+      nome: usuario.nome,
+      matricula: usuario.matricula,
+      administrador: usuario.administrador,
+      ativo: usuario.ativo,
+    });
+  };
+
   return (
     <Fragment>
       <div className="mt-2">
+        <h4>Cadastrar Usuários:</h4>
         <Alert />
       </div>
       <form className="form mt-2" onSubmit={(e) => onSubmit(e)}>
@@ -78,6 +99,7 @@ const Usuarios = ({
           <div className="form-group col-4">
             <label className="label">Matrícula:</label>
             <input
+              id="matricula"
               type="text"
               className="form-control"
               name="matricula"
@@ -149,8 +171,49 @@ const Usuarios = ({
           </button>
         </div>
       </form>
-      <div className="col-12 d-flex">
+      <hr />
+      <div className="col-12">
         <h4>Usuários:</h4>
+        {todosUsuarios && todosUsuarios.length > 0 ? (
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Status</th>
+                <th scope="col">Matrícula</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Editar</th>
+              </tr>
+            </thead>
+            <tbody>
+              {todosUsuarios.map((usuario) => {
+                let user = usuario;
+                return (
+                  <tr key={usuario._id}>
+                    <td>{i++}</td>
+                    <td>{usuario.ativo ? "Ativo" : "Inativo"}</td>
+                    <td>{usuario.matricula}</td>
+                    <td>{usuario.nome}</td>
+                    <td>
+                      <button
+                        className="btn btn-sm btn-red"
+                        onClick={(e) => {
+                          editarUsuario(usuario);
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faEdit} />
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        ) : (
+          <span className="ml-3 bg-danger text-light pr-2">
+            * Nenhum usuário disponível para ser visualizado
+          </span>
+        )}
       </div>
     </Fragment>
   );
@@ -165,4 +228,8 @@ Usuarios.propTypes = {
 const mapStateToProps = (state) => ({
   usuarios: state.usuarios,
 });
-export default connect(mapStateToProps, { setAlert, inserirUsuario })(Usuarios);
+export default connect(mapStateToProps, {
+  setAlert,
+  inserirUsuario,
+  obterTodosUsuarios,
+})(Usuarios);
