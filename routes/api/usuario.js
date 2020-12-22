@@ -12,7 +12,7 @@ const Usuario = require("../../models/Usuario");
 const auth = require("../../middleware/auth");
 
 router.put("/", auth, async (req, res) => {
-  const { nome, matricula, senha, ativo } = req.body;
+  const { nome, matricula, senha, ativo, administrador } = req.body;
 
   const camposUsuario = {};
 
@@ -23,6 +23,7 @@ router.put("/", auth, async (req, res) => {
     camposUsuario.senha = await bcrypt.hash(senha, salt);
   }
   if (ativo) camposUsuario.ativo = ativo;
+  if (administrador) camposUsuario.administrador = administrador;
 
   try {
     let usuario = await Usuario.findOne({ matricula });

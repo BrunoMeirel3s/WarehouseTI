@@ -4,6 +4,8 @@ import {
   FALHA_REGISTRO_USUARIO,
   SUCESSO_OBTER_TODOS_USUARIOS,
   FALHA_OBTER_TODOS_USUARIOS,
+  SUCESSO_ATUALIZAR_USUARIO,
+  FALHA_ATUALIZAR_USUARIO,
 } from "./types";
 import { setAlert } from "./alert";
 
@@ -12,7 +14,8 @@ export const inserirUsuario = (
   matricula,
   senha,
   ativo,
-  administrador
+  administrador,
+  atualizarUsuario
 ) => async (dispatch) => {
   const config = {
     headers: {
@@ -21,13 +24,24 @@ export const inserirUsuario = (
   };
 
   const body = JSON.stringify({ nome, matricula, senha, ativo, administrador });
+
   try {
-    const res = await axios.post("api/usuario", body, config);
-    dispatch({
-      type: SUCESSO_REGISTRO_USUARIO,
-      payload: res.data,
-    });
-    dispatch(setAlert("Usuário registrado com sucesso!", "success"));
+    if (atualizarUsuario) {
+      const res = await axios.put("api/usuario", body, config);
+      dispatch({
+        type: SUCESSO_ATUALIZAR_USUARIO,
+        payload: res.data,
+      });
+
+      dispatch(setAlert("Usuário atualizado com sucesso!", "success"));
+    } else {
+      const res = await axios.post("api/usuario", body, config);
+      dispatch({
+        type: SUCESSO_REGISTRO_USUARIO,
+        payload: res.data,
+      });
+      dispatch(setAlert("Usuário registrado com sucesso!", "success"));
+    }
   } catch (err) {
     const erros = err.response.data.errors;
     if (erros) {

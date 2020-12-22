@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 .card {
   border: 1px solid rgba(0, 0, 0, 0.4);
   /*box-shadow: 5px 5px 14px -1px rgba(0,0,0,0.75);*/

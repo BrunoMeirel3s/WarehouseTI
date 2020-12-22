@@ -54,9 +54,9 @@ router.post(
     } = req.body;
 
     const camposRegistro = {};
-    let usuario
+    let usuario;
     try {
-      usuario = await Usuario.findById(req.usuario.id, {nome:1})
+      usuario = await Usuario.findById(req.usuario.id, { nome: 1 });
     } catch (err) {
       console.log(err.message);
       res.status(500).send("Server error");
@@ -100,7 +100,10 @@ router.post(
     const { dataInicial, dataFinal } = req.body;
     try {
       let relatorio = await RegistroTroca.find({
-        date: { $gte: dataInicial, $lte: dataFinal },
+        date: {
+          $gte: new Date(new Date(dataInicial).setHours(00, 00, 00)),
+          $lte: new Date(new Date(dataFinal).setHours(23, 59, 59)),
+        },
       });
 
       if (relatorio.length < 1) {

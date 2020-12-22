@@ -27,6 +27,7 @@ const Usuarios = ({
     senha: "",
     confirmarSenha: "",
     administrador: "false",
+    atualizarUsuario: "false",
   });
   let i = 1;
 
@@ -37,6 +38,7 @@ const Usuarios = ({
     senha,
     confirmarSenha,
     administrador,
+    atualizarUsuario,
   } = formData;
 
   useEffect(() => {
@@ -48,7 +50,14 @@ const Usuarios = ({
     if (senha !== confirmarSenha) {
       setAlert("Senha e confirmação de senha não correspondem!", "danger");
     } else {
-      inserirUsuario(nome, matricula, senha, ativo, administrador);
+      inserirUsuario(
+        nome,
+        matricula,
+        senha,
+        ativo,
+        administrador,
+        atualizarUsuario
+      );
       setFormData({
         ...formData,
         ativo: "true",
@@ -66,14 +75,30 @@ const Usuarios = ({
 
   const editarUsuario = (usuario) => {
     document.getElementById("matricula").disabled = true;
-    document.getElementById("registrar").text = "Atualizar";
+    document.getElementById("registrar").innerText = "Atualizar";
     setFormData({
       ...formData,
       nome: usuario.nome,
       matricula: usuario.matricula,
       administrador: usuario.administrador,
       ativo: usuario.ativo,
+      atualizarUsuario: true,
     });
+    window.scrollTo(0, 0);
+  };
+
+  const limparFormulario = () => {
+    document.getElementById("matricula").disabled = false;
+    document.getElementById("registrar").innerText = "Inserir";
+    setFormData({
+      ...formData,
+      nome: "",
+      matricula: "",
+      administrador: "",
+      ativo: "true",
+      atualizarUsuario: false,
+    });
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -166,14 +191,20 @@ const Usuarios = ({
           >
             Inserir
           </button>
-          <button id="limpar" className="btn btn-lg btn-red ml-4">
+          <button
+            id="limpar"
+            className="btn btn-lg btn-red ml-4"
+            onClick={(e) => {
+              limparFormulario();
+            }}
+          >
             Limpar
           </button>
         </div>
       </form>
       <hr />
       <div className="col-12">
-        <h4>Usuários:</h4>
+        <h4>Usuários Registrados no Sistema:</h4>
         {todosUsuarios && todosUsuarios.length > 0 ? (
           <table className="table">
             <thead>
