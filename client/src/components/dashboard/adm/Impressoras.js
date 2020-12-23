@@ -9,7 +9,7 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { inserirUsuario, obterTodosUsuarios } from "../../../actions/usuarios";
 import { setAlert } from "../../../actions/alert";
 
-const Usuarios = ({
+const Impressoras = ({
   setAlert,
   inserirUsuario,
   obterTodosUsuarios,
@@ -242,7 +242,7 @@ const Usuarios = ({
           </table>
         ) : (
           <span className="ml-3 bg-danger text-light pr-2">
-            * Nenhum usuário disponível para ser visualizado
+            * Nenhum equipamento disponível para ser visualizado
           </span>
         )}
       </div>
@@ -250,7 +250,7 @@ const Usuarios = ({
   );
 };
 
-Usuarios.propTypes = {
+Impressoras.propTypes = {
   setAlert: PropTypes.func.isRequired,
   inserirUsuario: PropTypes.func.isRequired,
   obterTodosUsuarios: PropTypes.func.isRequired,
@@ -263,4 +263,4 @@ export default connect(mapStateToProps, {
   setAlert,
   inserirUsuario,
   obterTodosUsuarios,
-})(Usuarios);
+})(Impressoras);

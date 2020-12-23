@@ -4,75 +4,78 @@ import { connect } from "react-redux";
 import Alert from "../layout/Alert";
 import PropTypes from "prop-types";
 import Usuarios from "./adm/Usuarios";
+import Relatorios from "../../components/dashboard/Relatorios";
+import { faWindowRestore } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import PrivateRoute from "../routing/PrivateRoute";
 
 const Administracao = (props) => {
   return (
     <Fragment>
       <ul class="nav nav-tabs mt-2" id="myTab" role="tablist">
         <li class="nav-item">
-          <a
-            class="nav-link active text-dark"
+          <Link
+            class={`nav-link text-dark ${
+              window.location.pathname == "/administracao" ? "active" : ""
+            }`}
             id="usuarios-tab"
             data-toggle="tab"
-            href="#home"
+            to="/administracao"
             role="tab"
-            aria-controls="home"
-            aria-selected="true"
+            aria-controls="usuarios"
+            aria-selected={
+              window.location.pathname == "/administracao" ? "true" : "false"
+            }
           >
             Usuários
-          </a>
+          </Link>
         </li>
         <li class="nav-item">
-          <a
-            class="nav-link text-dark"
+          <Link
+            class={`nav-link text-dark ${
+              window.location.pathname == "/administracaoimpressoras"
+                ? "active"
+                : ""
+            }`}
             id="impressoras-tab"
             data-toggle="tab"
-            href="#profile"
+            to="/administracaoimpressoras"
             role="tab"
-            aria-controls="profile"
-            aria-selected="false"
+            aria-controls="impressoras"
+            aria-selected={
+              window.location.pathname == "/administracaoimpressoras"
+                ? "true"
+                : "false"
+            }
           >
             Impressoras
-          </a>
+          </Link>
         </li>
         <li class="nav- ">
-          <a
+          <Link
             class="nav-link text-dark"
             id="suprimentos-tab"
             data-toggle="tab"
-            href="#contact"
+            to="/administracaosuprimentos"
             role="tab"
             aria-controls="contact"
             aria-selected="false"
           >
             Suprimentos
-          </a>
+          </Link>
         </li>
       </ul>
       <div class="tab-content" id="myTabContent">
-        <div
-          class="tab-pane fade show active"
-          id="home"
-          role="tabpanel"
-          aria-labelledby="usuarios-tab"
-        >
-          <Usuarios />
-        </div>
-        <div
-          class="tab-pane fade"
-          id="profile"
-          role="tabpanel"
-          aria-labelledby="profile-tab"
-        >
-          ...
-        </div>
-        <div
-          class="tab-pane fade"
-          id="contact"
-          role="tabpanel"
-          aria-labelledby="contact-tab"
-        >
-          ...
+        <div>
+          <Switch>
+            <PrivateRoute exact path="/administracao" component={Usuarios} />
+            <PrivateRoute
+              exact
+              path="/administracaoimpressoras"
+              component={Relatorios}
+            />
+          </Switch>
         </div>
       </div>
     </Fragment>

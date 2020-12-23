@@ -1,6 +1,6 @@
 import { SUCESSO_REGISTRAR_TROCA, FALHA_REGISTRAR_TROCA } from "./types";
 import axios from "axios";
-import {setAlert} from './alert'
+import { setAlert } from "./alert";
 
 export const registrarTroca = (
   patrimonio,
@@ -31,10 +31,10 @@ export const registrarTroca = (
   try {
     const res = await axios.post("/api/registrotroca", body, config);
     dispatch({
-        type: SUCESSO_REGISTRAR_TROCA,
-        payload: res.data
-    })
-    dispatch(setAlert("Registro inserido com sucesso!", "success"))
+      type: SUCESSO_REGISTRAR_TROCA,
+      payload: res.data,
+    });
+    dispatch(setAlert("Registro inserido com sucesso!", "success"));
   } catch (err) {
     const erros = err.response.data.errors;
     if (erros) {

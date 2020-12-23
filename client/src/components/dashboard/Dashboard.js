@@ -34,27 +34,51 @@ const Dashboard = ({ isAuthenticated, logout }) => {
             </div>
             <hr className="bg-white" />
             <ul className="menu-items">
-              <li className="menu-item menu-active" id="registrartroca">
+              <li
+                className={`menu-item ${
+                  window.location.pathname == "/trocatoner" ? "menu-active" : ""
+                }`}
+                id="registrartroca"
+              >
                 <Link to="/trocatoner">
                   <FontAwesomeIcon icon={faQrcode} />{" "}
                   <span>Registrar Troca</span>
                 </Link>
               </li>
               <hr className="hr" />
-              <li className="menu-item" id="suprimentos">
+              <li
+                className={`menu-item ${
+                  window.location.pathname == "/suprimentos"
+                    ? "menu-active"
+                    : ""
+                }`}
+                id="suprimentos"
+              >
                 <Link to="/suprimentos">
                   <FontAwesomeIcon icon={faBoxes} /> <span>Suprimentos</span>
                 </Link>
               </li>
               <hr className="hr" />
-              <li className="menu-item" id="relatorios">
+              <li
+                className={`menu-item ${
+                  window.location.pathname == "/relatorios" ? "menu-active" : ""
+                }`}
+                id="relatorios"
+              >
                 <Link to="/relatorios">
                   <FontAwesomeIcon icon={faClipboardCheck} />{" "}
                   <span>Relatórios</span>
                 </Link>
               </li>
               <hr className="hr" />
-              <li className="menu-item" id="relatorios">
+              <li
+                className={`menu-item ${
+                  window.location.pathname == "/administracao"
+                    ? "menu-active"
+                    : ""
+                }`}
+                id="relatorios"
+              >
                 <Link to="/administracao">
                   <FontAwesomeIcon icon={faWrench} /> <span>Administração</span>
                 </Link>
@@ -75,6 +99,16 @@ const Dashboard = ({ isAuthenticated, logout }) => {
               <PrivateRoute
                 exact
                 path="/administracao"
+                component={Administracao}
+              />
+              <PrivateRoute
+                exact
+                path="/administracaoimpressoras"
+                component={Administracao}
+              />
+              <PrivateRoute
+                exact
+                path="/administracaosuprimentos"
                 component={Administracao}
               />
               <PrivateRoute exact path="/relatorios" component={Relatorios} />

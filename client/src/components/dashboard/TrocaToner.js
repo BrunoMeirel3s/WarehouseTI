@@ -7,7 +7,7 @@ import { obterImpressorasDisponiveis } from "../../actions/impressoras";
 import { registrarTroca } from "../../actions/registrartroca";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
-import Alert from '../layout/Alert'
+import Alert from "../layout/Alert";
 
 const Trocatoner = ({
   obterSuprimento,
@@ -16,6 +16,9 @@ const Trocatoner = ({
   todasImpressoras,
   registrarTroca,
 }) => {
+  if (document.getElementById("registrartroca")) {
+    document.getElementById("registrartroca").classList.add = "menu-active";
+  }
   const [formData, setFormData] = useState({
     patrimonio: "",
     codigoToner: "",
@@ -99,7 +102,7 @@ const Trocatoner = ({
       <div className="mt-3">
         <h1>Registrar Troca de Toner:</h1>
         <hr />
-        <Alert/>
+        <Alert />
         <div className="col-12 d-flex">
           <div className="col-4">
             <label className="label" for="patrimonio">

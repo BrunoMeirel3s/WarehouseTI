@@ -5,6 +5,9 @@ import {
   USUARIO_LOGADO,
   SUCESSO_OBTER_TODAS_IMPRESSORAS,
   FALHA_OBTER_TODAS_IMPRESSORAS,
+  SUCESSO_INSERIR_IMPRESSORA,
+  SUCESSO_ATUALIZAR_IMPRESSORA,
+  FALHA_INSERIR_IMPRESSORA,
 } from "./types";
 
 import { setAlert } from "./alert";
@@ -54,6 +57,53 @@ export const obterImpressorasDisponiveis = () => async (dispatch) => {
     }
     dispatch({
       type: FALHA_OBTER_TODAS_IMPRESSORAS,
+    });
+  }
+};
+
+export const inserirImpressora = (
+  nome,
+  matricula,
+  senha,
+  ativo,
+  administrador,
+  atualizarImpressora
+) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify({ nome, matricula, senha, ativo, administrador });
+
+  try {
+    if (atualizarImpressora) {
+      const res = await axios.put("api/usuario", body, config);
+      dispatch({
+        type: SUCESSO_ATUALIZAR_IMPRESSORA,
+        payload: res.data,
+      });
+
+      dispatch(setAlert("Usuário atualizado com sucesso!", "success"));
+    } else {
+      const res = await axios.post("api/usuario", body, config);
+      dispatch({
+        type: SUCESSO_INSERIR_IMPRESSORA,
+        payload: res.data,
+      });
+      dispatch(setAlert("Usuário registrado com sucesso!", "success"));
+    }
+  } catch (err) {
+    const erros = err.response.data.errors;
+    if (erros) {
+      erros.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+    } else {
+      //dispatch(setAlert(err.response.data, "danger"));
+    }
+
+    dispatch({
+      type: FALHA_INSERIR_IMPRESSORA,
     });
   }
 };
