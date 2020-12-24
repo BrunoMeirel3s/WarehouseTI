@@ -6,96 +6,96 @@ import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import { inserirUsuario, obterTodosUsuarios } from "../../../actions/usuarios";
+import {
+  inserirImpressora,
+  obterTodasImpressoras,
+} from "../../../actions/impressoras";
 import { setAlert } from "../../../actions/alert";
 
 const Impressoras = ({
   setAlert,
-  inserirUsuario,
-  obterTodosUsuarios,
-  usuarios: {
-    usuarioRegistrado,
-    sucessoRegistroUsuario,
-    todosUsuarios,
-    sucessoTodosUsuarios,
+  inserirImpressora,
+  obterTodasImpressoras,
+  impressoras: {
+    impressora,
+    sucessoImpressora,
+    todasImpressoras,
+    sucessoTodasImpressoras,
   },
 }) => {
   const [formData, setFormData] = useState({
-    ativo: "true",
-    nome: "",
-    matricula: "",
-    senha: "",
-    confirmarSenha: "",
-    administrador: "false",
-    atualizarUsuario: "false",
+    patrimonio: "",
+    modelo: "",
+    localizacao: "",
+    enderecoIp: "",
+    disponivel: "true",
+    atualizarImpressora: "false",
   });
   let i = 1;
 
   const {
-    ativo,
-    nome,
-    matricula,
-    senha,
-    confirmarSenha,
-    administrador,
-    atualizarUsuario,
+    patrimonio,
+    modelo,
+    localizacao,
+    enderecoIp,
+    disponivel,
+    atualizarImpressora,
   } = formData;
 
   useEffect(() => {
-    obterTodosUsuarios();
+    obterTodasImpressoras();
   }, []);
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (senha !== confirmarSenha) {
-      setAlert("Senha e confirmação de senha não correspondem!", "danger");
-    } else {
-      inserirUsuario(
-        nome,
-        matricula,
-        senha,
-        ativo,
-        administrador,
-        atualizarUsuario
-      );
-      setFormData({
-        ...formData,
-        ativo: "true",
-        nome: "",
-        matricula: "",
-        senha: "",
-        confirmarSenha: "",
-        administrador: "false",
-      });
-    }
+
+    inserirImpressora(
+      patrimonio,
+      modelo,
+      localizacao,
+      enderecoIp,
+      disponivel,
+      atualizarImpressora
+    );
+    setFormData({
+      ...formData,
+      patrimonio: "",
+      modelo: "",
+      localizacao: "",
+      enderecoIp: "",
+      disponivel: "true",
+      atualizarImpressora: "false",
+    });
   };
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const editarUsuario = (usuario) => {
-    document.getElementById("matricula").disabled = true;
+  const editarImpressora = (impressora) => {
+    document.getElementById("patrimonio").disabled = true;
     document.getElementById("registrar").innerText = "Atualizar";
     setFormData({
       ...formData,
-      nome: usuario.nome,
-      matricula: usuario.matricula,
-      administrador: usuario.administrador,
-      ativo: usuario.ativo,
-      atualizarUsuario: true,
+      patrimonio: impressora.patrimonio,
+      modelo: impressora.modelo,
+      localizacao: impressora.localizacao,
+      enderecoIp: impressora.enderecoIp,
+      disponivel: impressora.disponivel,
+      atualizarImpressora: true,
     });
     window.scrollTo(0, 0);
   };
 
   const limparFormulario = () => {
-    document.getElementById("matricula").disabled = false;
+    document.getElementById("patrimonio").disabled = false;
     document.getElementById("registrar").innerText = "Inserir";
     setFormData({
       ...formData,
-      nome: "",
-      matricula: "",
-      administrador: "",
-      ativo: "true",
+      patrimonio: "",
+      modelo: "",
+      localizacao: "",
+      enderecoIp: "",
+      disponivel: "true",
       atualizarUsuario: false,
     });
     window.scrollTo(0, 0);
@@ -104,17 +104,17 @@ const Impressoras = ({
   return (
     <Fragment>
       <div className="mt-2">
-        <h2>Cadastrar Usuários:</h2>
+        <h2>Cadastrar Impressoras:</h2>
         <Alert />
       </div>
       <form className="form mt-2" onSubmit={(e) => onSubmit(e)}>
         <div className="col-12 d-flex">
           <div className="form-group col-4">
-            <label className="label">Ativo</label>
+            <label className="label">Disponível:</label>
             <select
               className="form-control"
-              name="ativo"
-              value={ativo}
+              name="disponivel"
+              value={disponivel}
               onChange={(e) => onChange(e)}
             >
               <option value="true">Sim</option>
@@ -122,62 +122,50 @@ const Impressoras = ({
             </select>
           </div>
           <div className="form-group col-4">
-            <label className="label">Matrícula:</label>
+            <label className="label">Patrimônio:</label>
             <input
-              id="matricula"
+              id="patrimonio"
               type="text"
               className="form-control"
-              name="matricula"
-              value={matricula}
+              name="patrimonio"
+              value={patrimonio}
               onChange={(e) => onChange(e)}
               required
             ></input>
           </div>
         </div>
         <div className="col-12 d-flex">
+          <div className="form-group col-4">
+            <label className="label">Modelo:</label>
+            <input
+              type="text"
+              className="form-control"
+              name="modelo"
+              value={modelo}
+              onChange={(e) => onChange(e)}
+              required
+            ></input>
+          </div>
           <div className="form-group col-6">
-            <label className="label">Nome:</label>
+            <label className="label">localizacao:</label>
             <input
               type="text"
               className="form-control"
-              name="nome"
-              value={nome}
+              name="localizacao"
+              value={localizacao}
               onChange={(e) => onChange(e)}
               required
             ></input>
-          </div>
-          <div className="form-group col-2">
-            <label className="label">Administrador</label>
-            <select
-              className="form-control"
-              name="administrador"
-              value={administrador}
-              onChange={(e) => onChange(e)}
-            >
-              <option value="false">Não</option>
-              <option value="true">Sim</option>
-            </select>
           </div>
         </div>
         <div className="col-12 d-flex">
           <div className="form-group col-4">
-            <label className="label">Senha:</label>
+            <label className="label">Endereço IP:</label>
             <input
-              type="password"
+              type="text"
               className="form-control"
-              name="senha"
-              value={senha}
-              onChange={(e) => onChange(e)}
-              required
-            ></input>
-          </div>
-          <div className="form-group col-4">
-            <label className="label">Confirmar Senha:</label>
-            <input
-              type="password"
-              className="form-control"
-              name="confirmarSenha"
-              value={confirmarSenha}
+              name="enderecoIp"
+              value={enderecoIp}
               onChange={(e) => onChange(e)}
               required
             ></input>
@@ -205,31 +193,36 @@ const Impressoras = ({
       <hr />
       <div className="col-12">
         <h4>Usuários Registrados no Sistema:</h4>
-        {todosUsuarios && todosUsuarios.length > 0 ? (
+        {todasImpressoras && todasImpressoras.length > 0 ? (
           <table className="table">
             <thead>
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Status</th>
-                <th scope="col">Matrícula</th>
-                <th scope="col">Nome</th>
+                <th scope="col">Modelo</th>
+                <th scope="col">Patrimônio</th>
+                <th scope="col">Localização</th>
+                <th scope="col">Endereço IP</th>
                 <th scope="col">Editar</th>
               </tr>
             </thead>
             <tbody>
-              {todosUsuarios.map((usuario) => {
-                let user = usuario;
+              {todasImpressoras.map((impressora) => {
                 return (
-                  <tr key={usuario._id}>
+                  <tr key={impressora._id}>
                     <td>{i++}</td>
-                    <td>{usuario.ativo ? "Ativo" : "Inativo"}</td>
-                    <td>{usuario.matricula}</td>
-                    <td>{usuario.nome}</td>
+                    <td>
+                      {impressora.disponivel ? "Disponível" : "Indisponível"}
+                    </td>
+                    <td>{impressora.modelo}</td>
+                    <td>{impressora.patrimonio}</td>
+                    <td>{impressora.localizacao}</td>
+                    <td>{impressora.enderecoIp}</td>
                     <td>
                       <button
                         className="btn btn-sm btn-red"
                         onClick={(e) => {
-                          editarUsuario(usuario);
+                          editarImpressora(impressora);
                         }}
                       >
                         <FontAwesomeIcon icon={faEdit} />
@@ -252,15 +245,15 @@ const Impressoras = ({
 
 Impressoras.propTypes = {
   setAlert: PropTypes.func.isRequired,
-  inserirUsuario: PropTypes.func.isRequired,
-  obterTodosUsuarios: PropTypes.func.isRequired,
+  inserirImpressora: PropTypes.func.isRequired,
+  obterTodasImpressoras: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  usuarios: state.usuarios,
+  impressoras: state.impressoras,
 });
 export default connect(mapStateToProps, {
   setAlert,
-  inserirUsuario,
-  obterTodosUsuarios,
+  inserirImpressora,
+  obterTodasImpressoras,
 })(Impressoras);

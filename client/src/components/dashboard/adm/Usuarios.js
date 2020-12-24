@@ -66,6 +66,7 @@ const Usuarios = ({
         senha: "",
         confirmarSenha: "",
         administrador: "false",
+        atualizarUsuario: "false",
       });
     }
   };

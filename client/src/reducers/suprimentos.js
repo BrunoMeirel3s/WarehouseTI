@@ -4,13 +4,13 @@ import {
   OBTER_TODOS_SUPRIMENTOS,
   FALHA_OBTER_SUPRIMENTO,
   FALHA_OBTER_TODOS_SUPRIMENTOS,
-  OBTER_SUPRIMENTO
+  OBTER_SUPRIMENTO,
 } from "../actions/types";
 
 const estadosInicias = {
   suprimento: null,
   sucessoSuprimento: false,
-  todosSuprimentos: null
+  todosSuprimentos: null,
 };
 
 export default function (state = estadosInicias, action) {
@@ -28,25 +28,25 @@ export default function (state = estadosInicias, action) {
         sucessoSuprimento: false,
       };
     case OBTER_TODOS_SUPRIMENTOS:
-      return{
+      return {
         ...state,
         todosSuprimentos: payload,
-        sucessoSuprimento: true
-      }
+        sucessoSuprimento: true,
+      };
     case OBTER_SUPRIMENTO:
-      return{
+      return {
         ...state,
         suprimento: payload,
-        sucessoSuprimento: true
-      }  
+        sucessoSuprimento: true,
+      };
     case FALHA_OBTER_SUPRIMENTO:
     case FALHA_OBTER_TODOS_SUPRIMENTOS:
-      return{
+      return {
         ...state,
         todosSuprimentos: null,
         suprimento: null,
-        sucessoSuprimento: null
-      }  
+        sucessoSuprimento: null,
+      };
     default:
       return state;
   }

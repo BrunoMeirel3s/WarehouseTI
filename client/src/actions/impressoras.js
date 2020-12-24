@@ -62,11 +62,11 @@ export const obterImpressorasDisponiveis = () => async (dispatch) => {
 };
 
 export const inserirImpressora = (
-  nome,
-  matricula,
-  senha,
-  ativo,
-  administrador,
+  patrimonio,
+  modelo,
+  localizacao,
+  enderecoIp,
+  disponivel,
   atualizarImpressora
 ) => async (dispatch) => {
   const config = {
@@ -75,24 +75,30 @@ export const inserirImpressora = (
     },
   };
 
-  const body = JSON.stringify({ nome, matricula, senha, ativo, administrador });
+  const body = JSON.stringify({
+    patrimonio,
+    modelo,
+    localizacao,
+    enderecoIp,
+    disponivel,
+  });
 
   try {
     if (atualizarImpressora) {
-      const res = await axios.put("api/usuario", body, config);
+      const res = await axios.put("api/impressora", body, config);
       dispatch({
         type: SUCESSO_ATUALIZAR_IMPRESSORA,
         payload: res.data,
       });
 
-      dispatch(setAlert("Usuário atualizado com sucesso!", "success"));
+      dispatch(setAlert("Impressora atualizada com sucesso!", "success"));
     } else {
-      const res = await axios.post("api/usuario", body, config);
+      const res = await axios.post("api/impressora", body, config);
       dispatch({
         type: SUCESSO_INSERIR_IMPRESSORA,
         payload: res.data,
       });
-      dispatch(setAlert("Usuário registrado com sucesso!", "success"));
+      dispatch(setAlert("Impressora inserida com sucesso!", "success"));
     }
   } catch (err) {
     const erros = err.response.data.errors;
@@ -104,6 +110,24 @@ export const inserirImpressora = (
 
     dispatch({
       type: FALHA_INSERIR_IMPRESSORA,
+    });
+  }
+};
+
+export const obterTodasImpressoras = () => async (dispatch) => {
+  try {
+    const res = await axios.get("api/impressora");
+    dispatch({
+      type: SUCESSO_OBTER_TODAS_IMPRESSORAS,
+      payload: res.data,
+    });
+  } catch (err) {
+    const erros = err.response.data.errors;
+    if (erros) {
+      erros.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+    }
+    dispatch({
+      type: FALHA_OBTER_TODAS_IMPRESSORAS,
     });
   }
 };

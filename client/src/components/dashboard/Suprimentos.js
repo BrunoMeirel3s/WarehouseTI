@@ -40,7 +40,7 @@ const Suprimentos = ({
   return (
     <Fragment>
       <div className="mt-3">
-        <h1>Administração de suprimentos</h1>
+        <h1>Suprimentos</h1>
         <hr />
         <h4>Registro de Novos Suprimentos:</h4>
         <Alert />

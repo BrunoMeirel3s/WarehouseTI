@@ -9,6 +9,7 @@ const estadosIniciais = {
   impressora: null,
   sucessoImpressora: null,
   todasImpressoras: null,
+  sucessoTodasImpressoras: null,
 };
 
 export default function (state = estadosIniciais, action) {
@@ -27,17 +28,17 @@ export default function (state = estadosIniciais, action) {
         sucessoImpressora: false,
       };
     case SUCESSO_OBTER_TODAS_IMPRESSORAS:
-        return {
-            ...state,
-            todasImpressoras: payload,
-            sucessoImpressora: true
-        }
+      return {
+        ...state,
+        todasImpressoras: payload,
+        sucessoTodasImpressoras: true,
+      };
     case FALHA_OBTER_TODAS_IMPRESSORAS:
-        return{
-            ...state,
-            todasImpressoras: null,
-            sucessoImpressora: false
-        }
+      return {
+        ...state,
+        todasImpressoras: null,
+        sucessoTodasImpressoras: false,
+      };
     default:
       return state;
   }

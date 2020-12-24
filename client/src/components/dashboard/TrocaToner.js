@@ -70,6 +70,7 @@ const Trocatoner = ({
       setFormData({ ...formData, corToner: suprimento.cor });
     }
   }, [suprimento]);
+
   useEffect(() => {
     obterImpressorasDisponiveis();
   }, []);
@@ -96,6 +97,22 @@ const Trocatoner = ({
       });
     }
   }, [patrimonio]);
+
+  const limparFormulario = () => {
+    document.getElementById("codigoToner").disabled = false;
+    setFormData({
+      ...formData,
+      patrimonio: "",
+      codigoToner: "",
+      corToner: "",
+      localizacao: "",
+      modelo: "",
+      enderecoIp: "",
+      totalA3: "",
+      totalA4: "",
+    });
+    window.scrollTo(0, 0);
+  };
 
   return (
     <Fragment>
@@ -135,12 +152,13 @@ const Trocatoner = ({
               </label>
               <div className="input-group">
                 <input
+                  id="codigoToner"
                   type="text"
                   className="form-control"
                   name="codigoToner"
                   value={codigoToner}
                   onChange={(e) => onChange(e)}
-                  readOnly={corToner}
+                  disabled={corToner}
                   required
                 />
                 <div className="input-group-prepend">
@@ -245,7 +263,13 @@ const Trocatoner = ({
             >
               Registrar
             </button>
-            <button id="limpar" className="btn btn-lg btn-red ml-4">
+            <button
+              id="limpar"
+              className="btn btn-lg btn-red ml-4"
+              onClick={(e) => {
+                limparFormulario();
+              }}
+            >
               Limpar
             </button>
           </div>

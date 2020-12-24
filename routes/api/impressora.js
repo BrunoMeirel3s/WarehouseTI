@@ -12,7 +12,6 @@ router.put("/", auth, async (req, res) => {
 
   const camposEquipamento = {};
 
-  if (patrimonio) camposEquipamento.patrimonio = patrimonio;
   if (modelo) camposEquipamento.modelo = modelo;
   if (localizacao) camposEquipamento.localizacao = localizacao;
   if (enderecoIp) camposEquipamento.enderecoIp = enderecoIp;
@@ -111,14 +110,26 @@ router.get("/disponivel", async (req, res) => {
 router.post("/obterimpressora", async (req, res) => {
   const { patrimonio } = req.body;
   try {
-    let impressora = await Impressora.findOne({patrimonio})
-    if(!impressora){
-      return res.status(400).json({msg: "Impressora não encontrada"})
+    let impressora = await Impressora.findOne({ patrimonio });
+    if (!impressora) {
+      return res.status(400).json({ msg: "Impressora não encontrada" });
     }
-    if(impressora.disponivel !== true){
-      return res.status(400).json({msg: "Impressora não disponível"});
+    if (impressora.disponivel !== true) {
+      return res.status(400).json({ msg: "Impressora não disponível" });
     }
-    return res.json(impressora)
+    return res.json(impressora);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
+router.get("/", async (req, res) => {
+  try {
+    let impressora = await Impressora.find();
+    if (impressora) {
+      return res.json(impressora);
+    }
   } catch (err) {
     console.log(err.message);
     res.status(500).send("Server error");
