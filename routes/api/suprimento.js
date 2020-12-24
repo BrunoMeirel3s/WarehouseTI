@@ -116,4 +116,16 @@ router.post("/obtersuprimento", auth, async (req, res) => {
   }
 });
 
+router.get("/", auth, async (req, res) => {
+  try {
+    let suprimentos = await Suprimento.find();
+    if (suprimentos) {
+      return res.json(suprimentos);
+    }
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;

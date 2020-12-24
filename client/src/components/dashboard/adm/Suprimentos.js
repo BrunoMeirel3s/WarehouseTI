@@ -1,5 +1,4 @@
 import React, { Fragment, useState } from "react";
-import Moment from "react-moment";
 import { connect } from "react-redux";
 import Alert from "../../layout/Alert";
 import PropTypes from "prop-types";
@@ -7,12 +6,12 @@ import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import {
-  inserirImpressora,
-  obterTodasImpressoras,
-} from "../../../actions/impressoras";
+  inserirSuprimento,
+  todosSuprimentosBanco,
+} from "../../../actions/suprimentos";
 import { setAlert } from "../../../actions/alert";
 
-const Impressoras = ({
+const Suprimentos = ({
   setAlert,
   inserirImpressora,
   obterTodasImpressoras,
@@ -242,7 +241,7 @@ const Impressoras = ({
   );
 };
 
-Impressoras.propTypes = {
+Suprimentos.propTypes = {
   setAlert: PropTypes.func.isRequired,
   inserirImpressora: PropTypes.func.isRequired,
   obterTodasImpressoras: PropTypes.func.isRequired,
@@ -255,4 +254,4 @@ export default connect(mapStateToProps, {
   setAlert,
   inserirImpressora,
   obterTodasImpressoras,
-})(Impressoras);
+})(Suprimentos);

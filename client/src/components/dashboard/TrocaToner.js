@@ -53,6 +53,17 @@ const Trocatoner = ({
       totalA3,
       totalA4
     );
+    setFormData({
+      ...formData,
+      patrimonio: "",
+      codigoToner: "",
+      corToner: "",
+      localizacao: "",
+      modelo: "",
+      enderecoIp: "",
+      totalA3: "",
+      totalA4: "",
+    });
   };
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });

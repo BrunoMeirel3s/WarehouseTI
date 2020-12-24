@@ -4,6 +4,7 @@ const auth = require("../../middleware/auth");
 const { check, validationResult } = require("express-validator/check");
 const RegistroTroca = require("../../models/RegistroTroca");
 const Usuario = require("../../models/Usuario");
+const Suprimento = require("../../models/Suprimento");
 
 // @route  POST api/registrotroca
 // @desc   Insert a register of toner change
@@ -73,6 +74,10 @@ router.post(
 
     try {
       registroTroca = new RegistroTroca(camposRegistro);
+      await Suprimento.findOneAndUpdate(
+        { codigo: codigoToner },
+        { utilizado: true }
+      );
       await registroTroca.save();
 
       return res.json(registroTroca);

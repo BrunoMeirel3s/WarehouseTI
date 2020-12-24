@@ -2,6 +2,7 @@ import {
   SUCESSO_INSERIR_SUPRIMENTO,
   FALHA_INSERIR_SUPRIMENTO,
   OBTER_TODOS_SUPRIMENTOS,
+  OBTER_TODOS_SUPRIMENTOS_BANCO,
   FALHA_OBTER_SUPRIMENTO,
   FALHA_OBTER_TODOS_SUPRIMENTOS,
   OBTER_SUPRIMENTO,
@@ -11,6 +12,7 @@ const estadosInicias = {
   suprimento: null,
   sucessoSuprimento: false,
   todosSuprimentos: null,
+  todosSuprimentosBanco: null,
 };
 
 export default function (state = estadosInicias, action) {
@@ -33,6 +35,12 @@ export default function (state = estadosInicias, action) {
         todosSuprimentos: payload,
         sucessoSuprimento: true,
       };
+    case OBTER_TODOS_SUPRIMENTOS_BANCO:
+      return {
+        ...state,
+        todosSuprimentosBanco: payload,
+        sucessoSuprimento: true,
+      };
     case OBTER_SUPRIMENTO:
       return {
         ...state,
@@ -46,6 +54,7 @@ export default function (state = estadosInicias, action) {
         todosSuprimentos: null,
         suprimento: null,
         sucessoSuprimento: null,
+        todosSuprimentosBanco: null,
       };
     default:
       return state;

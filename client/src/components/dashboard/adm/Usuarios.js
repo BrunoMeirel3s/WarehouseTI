@@ -27,7 +27,7 @@ const Usuarios = ({
     senha: "",
     confirmarSenha: "",
     administrador: "false",
-    atualizarUsuario: "false",
+    atualizarUsuario: false,
   });
   let i = 1;
 
@@ -66,7 +66,7 @@ const Usuarios = ({
         senha: "",
         confirmarSenha: "",
         administrador: "false",
-        atualizarUsuario: "false",
+        atualizarUsuario: false,
       });
     }
   };

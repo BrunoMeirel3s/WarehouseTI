@@ -26,7 +26,7 @@ export const inserirUsuario = (
   const body = JSON.stringify({ nome, matricula, senha, ativo, administrador });
 
   try {
-    if (atualizarUsuario) {
+    if (atualizarUsuario == true) {
       const res = await axios.put("api/usuario", body, config);
       dispatch({
         type: SUCESSO_ATUALIZAR_USUARIO,
@@ -42,6 +42,11 @@ export const inserirUsuario = (
       });
       dispatch(setAlert("Usuário registrado com sucesso!", "success"));
     }
+    const resTodosUsuarios = await axios.get("api/usuario");
+    dispatch({
+      type: SUCESSO_OBTER_TODOS_USUARIOS,
+      payload: resTodosUsuarios.data,
+    });
   } catch (err) {
     const erros = err.response.data.errors;
     if (erros) {

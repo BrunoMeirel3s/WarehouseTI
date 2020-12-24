@@ -20,16 +20,17 @@ const Suprimentos = ({
     modelo: "C911",
     disponivel: "true",
     cor: "Preto",
+    atualizarSuprimento: false,
   });
 
-  const { codigo, modelo, disponivel, cor } = formData;
+  const { codigo, modelo, disponivel, cor, atualizarSuprimento } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    inserirSuprimento(codigo, modelo, disponivel, cor);
+    inserirSuprimento(codigo, modelo, disponivel, cor, atualizarSuprimento);
     setFormData({ ...formData, codigo: " " });
   };
   let i = 1;

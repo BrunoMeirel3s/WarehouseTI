@@ -84,7 +84,7 @@ export const inserirImpressora = (
   });
 
   try {
-    if (atualizarImpressora) {
+    if (atualizarImpressora == true) {
       const res = await axios.put("api/impressora", body, config);
       dispatch({
         type: SUCESSO_ATUALIZAR_IMPRESSORA,
@@ -99,6 +99,12 @@ export const inserirImpressora = (
         payload: res.data,
       });
       dispatch(setAlert("Impressora inserida com sucesso!", "success"));
+
+      const resTodasImpressoras = await axios.get("api/impressora");
+      dispatch({
+        type: SUCESSO_OBTER_TODAS_IMPRESSORAS,
+        payload: resTodasImpressoras.data,
+      });
     }
   } catch (err) {
     const erros = err.response.data.errors;
