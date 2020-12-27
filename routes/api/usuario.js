@@ -11,6 +11,16 @@ const { check, validationResult } = require("express-validator/check");
 const Usuario = require("../../models/Usuario");
 const auth = require("../../middleware/auth");
 
+router.get("/", auth, async (req, res) => {
+  try {
+    const usuario = await Usuario.findById(req.user.id).select("-senha");
+    res.json(usuario);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 router.put("/", auth, async (req, res) => {
   const { nome, matricula, senha, ativo, administrador } = req.body;
 
@@ -139,7 +149,7 @@ router.post(
   }
 );
 
-router.get("/", async (req, res) => {
+router.get("/todosusuarios", auth, async (req, res) => {
   try {
     let usuarios = await Usuario.find();
     if (usuarios) {

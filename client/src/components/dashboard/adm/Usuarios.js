@@ -68,6 +68,7 @@ const Usuarios = ({
         administrador: "false",
         atualizarUsuario: false,
       });
+      document.getElementById("matricula").disabled = false;
     }
   };
 
@@ -88,7 +89,8 @@ const Usuarios = ({
     window.scrollTo(0, 0);
   };
 
-  const limparFormulario = () => {
+  const limparFormulario = (e) => {
+    e.preventDefault();
     document.getElementById("matricula").disabled = false;
     document.getElementById("registrar").innerText = "Inserir";
     setFormData({
@@ -196,7 +198,7 @@ const Usuarios = ({
             id="limpar"
             className="btn btn-lg btn-red ml-4"
             onClick={(e) => {
-              limparFormulario();
+              limparFormulario(e);
             }}
           >
             Limpar
@@ -205,7 +207,7 @@ const Usuarios = ({
       </form>
       <hr />
       <div className="col-12">
-        <h4>Usuários Registrados no Sistema:</h4>
+        <h4>Usuários Cadastrados no Sistema:</h4>
         {todosUsuarios && todosUsuarios.length > 0 ? (
           <table className="table">
             <thead>
@@ -219,7 +221,6 @@ const Usuarios = ({
             </thead>
             <tbody>
               {todosUsuarios.map((usuario) => {
-                let user = usuario;
                 return (
                   <tr key={usuario._id}>
                     <td>{i++}</td>

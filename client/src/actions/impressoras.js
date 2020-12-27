@@ -26,7 +26,6 @@ export const obterImpressora = (patrimonio) => async (dispatch) => {
       body,
       config
     );
-    dispatch({ type: USUARIO_LOGADO });
     dispatch({
       type: SUCESSO_OBTER_IMPRESSORA,
       payload: res.data,
@@ -45,7 +44,6 @@ export const obterImpressora = (patrimonio) => async (dispatch) => {
 export const obterImpressorasDisponiveis = () => async (dispatch) => {
   try {
     const res = await axios.get("/api/impressora/disponivel");
-    dispatch({ type: USUARIO_LOGADO });
     dispatch({
       type: SUCESSO_OBTER_TODAS_IMPRESSORAS,
       payload: res.data,
@@ -92,6 +90,12 @@ export const inserirImpressora = (
       });
 
       dispatch(setAlert("Impressora atualizada com sucesso!", "success"));
+
+      const resTodasImpressoras = await axios.get("api/impressora");
+      dispatch({
+        type: SUCESSO_OBTER_TODAS_IMPRESSORAS,
+        payload: resTodasImpressoras.data,
+      });
     } else {
       const res = await axios.post("api/impressora", body, config);
       dispatch({

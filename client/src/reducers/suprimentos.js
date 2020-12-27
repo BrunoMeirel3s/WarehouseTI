@@ -21,7 +21,6 @@ export default function (state = estadosInicias, action) {
     case SUCESSO_INSERIR_SUPRIMENTO:
       return {
         ...state,
-        suprimento: payload,
         sucessoSuprimento: true,
       };
     case FALHA_INSERIR_SUPRIMENTO:

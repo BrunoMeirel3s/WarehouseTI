@@ -35,12 +35,18 @@ export const inserirSuprimento = (
         type: SUCESSO_ATUALIZAR_SUPRIMENTO,
         payload: res.data,
       });
+      dispatch(setAlert("Suprimento atualizado com sucesso!", "success"));
+
+      const resTodosSuprimentos = await axios.get("api/suprimento");
+      dispatch({
+        type: OBTER_TODOS_SUPRIMENTOS_BANCO,
+        payload: resTodosSuprimentos.data,
+      });
     } else {
       const res = await axios.post("/api/suprimento", body, config);
 
       dispatch({
         type: SUCESSO_INSERIR_SUPRIMENTO,
-        payload: res.data,
       });
       dispatch(setAlert("Suprimento inserido com sucesso!", "success"));
 
@@ -114,7 +120,7 @@ export const obterSuprimento = (codigo) => async (dispatch) => {
   }
 };
 
-export const todosSuprimentosBanco = () => async (dispatch) => {
+export const obterTodosSuprimentosBanco = () => async (dispatch) => {
   try {
     const res = await axios.get("api/suprimento");
     dispatch({

@@ -5,7 +5,6 @@ import {
   SUCESSO_OBTER_TODOS_USUARIOS,
   FALHA_OBTER_TODOS_USUARIOS,
   SUCESSO_ATUALIZAR_USUARIO,
-  FALHA_ATUALIZAR_USUARIO,
 } from "./types";
 import { setAlert } from "./alert";
 
@@ -42,7 +41,7 @@ export const inserirUsuario = (
       });
       dispatch(setAlert("Usuário registrado com sucesso!", "success"));
     }
-    const resTodosUsuarios = await axios.get("api/usuario");
+    const resTodosUsuarios = await axios.get("api/usuario/todosusuarios");
     dispatch({
       type: SUCESSO_OBTER_TODOS_USUARIOS,
       payload: resTodosUsuarios.data,
@@ -63,7 +62,7 @@ export const inserirUsuario = (
 
 export const obterTodosUsuarios = () => async (dispatch) => {
   try {
-    const res = await axios.get("api/usuario");
+    const res = await axios.get("api/usuario/todosusuarios");
     dispatch({
       type: SUCESSO_OBTER_TODOS_USUARIOS,
       payload: res.data,

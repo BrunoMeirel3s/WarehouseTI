@@ -23,6 +23,7 @@ const App = () => {
           <Route exact path="/relatorios" component={Dashboard} />
           <Route exact path="/administracao" component={Dashboard} />
           <Route exact path="/administracaoimpressoras" component={Dashboard} />
+          <Route exact path="/administracaosuprimentos" component={Dashboard} />
         </Fragment>
       </Router>
     </Provider>

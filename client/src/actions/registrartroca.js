@@ -1,4 +1,8 @@
-import { SUCESSO_REGISTRAR_TROCA, FALHA_REGISTRAR_TROCA } from "./types";
+import {
+  SUCESSO_REGISTRAR_TROCA,
+  FALHA_REGISTRAR_TROCA,
+  OBTER_SUPRIMENTO,
+} from "./types";
 import axios from "axios";
 import { setAlert } from "./alert";
 
@@ -35,6 +39,11 @@ export const registrarTroca = (
       payload: res.data,
     });
     dispatch(setAlert("Registro inserido com sucesso!", "success"));
+
+    dispatch({
+      type: OBTER_SUPRIMENTO,
+      payload: null,
+    });
   } catch (err) {
     const erros = err.response.data.errors;
     if (erros) {

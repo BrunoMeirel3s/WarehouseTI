@@ -66,6 +66,7 @@ const Impressoras = ({
       disponivel: "true",
       atualizarImpressora: false,
     });
+    document.getElementById("patrimonio").disabled = false;
   };
 
   const onChange = (e) =>
@@ -86,7 +87,8 @@ const Impressoras = ({
     window.scrollTo(0, 0);
   };
 
-  const limparFormulario = () => {
+  const limparFormulario = (e) => {
+    e.preventDefault();
     document.getElementById("patrimonio").disabled = false;
     document.getElementById("registrar").innerText = "Inserir";
     setFormData({
@@ -182,7 +184,7 @@ const Impressoras = ({
             id="limpar"
             className="btn btn-lg btn-red ml-4"
             onClick={(e) => {
-              limparFormulario();
+              limparFormulario(e);
             }}
           >
             Limpar
@@ -191,7 +193,7 @@ const Impressoras = ({
       </form>
       <hr />
       <div className="col-12">
-        <h4>Usuários Registrados no Sistema:</h4>
+        <h4>Impressoras Cadastradas no Sistema:</h4>
         {todasImpressoras && todasImpressoras.length > 0 ? (
           <table className="table">
             <thead>

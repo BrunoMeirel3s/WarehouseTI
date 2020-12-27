@@ -77,7 +77,7 @@ const Trocatoner = ({
   };
 
   useEffect(() => {
-    if (suprimento) {
+    if (suprimento && suprimento.utilizado === false) {
       setFormData({ ...formData, corToner: suprimento.cor });
     }
   }, [suprimento]);

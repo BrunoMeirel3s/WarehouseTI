@@ -8,8 +8,10 @@ import {
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 import Alert from "../layout/Alert";
+import { setAlert } from "../../actions/alert";
 
 const Suprimentos = ({
+  setAlert,
   inserirSuprimento,
   sucessoSuprimento,
   obterTodosSuprimentos,
@@ -23,6 +25,8 @@ const Suprimentos = ({
     atualizarSuprimento: false,
   });
 
+  let i = 1;
+
   const { codigo, modelo, disponivel, cor, atualizarSuprimento } = formData;
 
   const onChange = (e) =>
@@ -30,10 +34,28 @@ const Suprimentos = ({
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    inserirSuprimento(codigo, modelo, disponivel, cor, atualizarSuprimento);
+    if (!codigo) {
+      setAlert("Informe o código do suprimento!", "danger");
+    } else {
+      inserirSuprimento(codigo, modelo, disponivel, cor, atualizarSuprimento);
+    }
+
     setFormData({ ...formData, codigo: " " });
   };
-  let i = 1;
+
+  const limparFormulario = (e) => {
+    e.preventDefault();
+    setFormData({
+      ...formData,
+      codigo: "",
+      modelo: "",
+      cor: "",
+      disponivel: "true",
+      atualizarSuprimento: false,
+    });
+    window.scrollTo(0, 0);
+  };
+
   useEffect(() => {
     obterTodosSuprimentos();
   }, []);
@@ -94,7 +116,7 @@ const Suprimentos = ({
               >
                 <option value="Preto">Preto</option>
                 <option value="Amarelo">Amarelo</option>
-                <option value="Majenta">Majenta</option>
+                <option value="Magenta">Magenta</option>
                 <option value="Ciano">Ciano</option>
               </select>
             </div>
@@ -108,7 +130,13 @@ const Suprimentos = ({
             >
               Inserir
             </button>
-            <button id="limpar" className="btn btn-lg btn-red ml-4">
+            <button
+              id="limpar"
+              className="btn btn-lg btn-red ml-4"
+              onClick={(e) => {
+                limparFormulario(e);
+              }}
+            >
               Limpar
             </button>
           </div>
@@ -166,6 +194,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
+  setAlert,
   inserirSuprimento,
   obterTodosSuprimentos,
 })(Suprimentos);

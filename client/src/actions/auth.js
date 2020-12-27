@@ -19,7 +19,6 @@ export const carregarUsuario = () => async (dispatch) => {
 
   try {
     const res = await axios.get("/api/auth");
-
     dispatch({
       type: USUARIO_LOGADO,
       payload: res.data,
@@ -30,6 +29,8 @@ export const carregarUsuario = () => async (dispatch) => {
     });
   }
 };
+
+export const chegarUsuarioAdministrador = (matricula) => async (dispatch) => {};
 
 export const login = (matricula, senha) => async (dispatch) => {
   const config = {

@@ -5,6 +5,7 @@ import Alert from "../layout/Alert";
 import PropTypes from "prop-types";
 import Usuarios from "./adm/Usuarios";
 import Impressoras from "./adm/Impressoras";
+import Suprimentos from "./adm/Suprimentos";
 import { faWindowRestore } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -54,13 +55,21 @@ const Administracao = (props) => {
         </li>
         <li class="nav- ">
           <Link
-            class="nav-link text-dark"
+            class={`nav-link text-dark ${
+              window.location.pathname == "/administracaosuprimentos"
+                ? "active"
+                : ""
+            }`}
             id="suprimentos-tab"
             data-toggle="tab"
             to="/administracaosuprimentos"
             role="tab"
-            aria-controls="contact"
-            aria-selected="false"
+            aria-controls="suprimentos"
+            aria-selected={
+              window.location.pathname == "/administracaosuprimentos"
+                ? "true"
+                : "false"
+            }
           >
             Suprimentos
           </Link>
@@ -78,7 +87,7 @@ const Administracao = (props) => {
             <PrivateRoute
               exact
               path="/administracaosuprimentos"
-              component={Impressoras}
+              component={Suprimentos}
             />
           </Switch>
         </div>
