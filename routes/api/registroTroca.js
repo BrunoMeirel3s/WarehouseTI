@@ -103,11 +103,13 @@ router.post(
       return res.status(400).json({ erros: erros.array() });
     }
     const { dataInicial, dataFinal } = req.body;
+    const nDataFinal = dataFinal.split("-");
+    nDataFinal[2] = (parseInt(nDataFinal[2]) + 1).toString();
     try {
       let relatorio = await RegistroTroca.find({
         date: {
           $gte: dataInicial,
-          $lte: dataFinal,
+          $lt: new Date(new Date(dataFinal).setHours(23, 59, 59)),
         },
       });
 
