@@ -106,8 +106,8 @@ router.post(
     try {
       let relatorio = await RegistroTroca.find({
         date: {
-          $gte: new Date(new Date(dataInicial).setHours(00, 00, 00)),
-          $lte: new Date(new Date(dataFinal).setHours(23, 59, 59)),
+          $gte: dataInicial,
+          $lte: dataFinal,
         },
       });
 

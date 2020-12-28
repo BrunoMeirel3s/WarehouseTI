@@ -1,14 +1,9 @@
-import React, { Fragment, useState } from "react";
-import Moment from "react-moment";
-import { connect } from "react-redux";
-import Alert from "../layout/Alert";
-import PropTypes from "prop-types";
+import React, { Fragment } from "react";
 import Usuarios from "./adm/Usuarios";
 import Impressoras from "./adm/Impressoras";
 import Suprimentos from "./adm/Suprimentos";
-import { faWindowRestore } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Switch } from "react-router-dom";
 import PrivateRoute from "../routing/PrivateRoute";
 
 const Administracao = (props) => {

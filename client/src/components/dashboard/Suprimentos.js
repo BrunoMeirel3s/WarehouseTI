@@ -13,7 +13,6 @@ import { setAlert } from "../../actions/alert";
 const Suprimentos = ({
   setAlert,
   inserirSuprimento,
-  sucessoSuprimento,
   obterTodosSuprimentos,
   todosSuprimentos,
 }) => {

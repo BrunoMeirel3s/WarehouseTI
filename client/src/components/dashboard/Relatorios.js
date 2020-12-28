@@ -7,10 +7,7 @@ import PropTypes from "prop-types";
 import Alert from "../layout/Alert";
 import { obterRelatorio } from "../../actions/relatorio";
 
-const Relatorios = ({
-  obterRelatorio,
-  relatorio: { relatorio, sucessoObterRelatorio },
-}) => {
+const Relatorios = ({ obterRelatorio, relatorio: { relatorio } }) => {
   const [formData, setFormData] = useState({
     dataInicial: "",
     dataFinal: "",

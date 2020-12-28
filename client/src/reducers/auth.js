@@ -42,7 +42,6 @@ export default function (state = estadosIniciais, action) {
         token: null,
         isAuthenticated: false,
         loading: false,
-        usuario: null,
       };
 
     default:

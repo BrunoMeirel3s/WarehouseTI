@@ -30,8 +30,6 @@ export const carregarUsuario = () => async (dispatch) => {
   }
 };
 
-export const chegarUsuarioAdministrador = (matricula) => async (dispatch) => {};
-
 export const login = (matricula, senha) => async (dispatch) => {
   const config = {
     headers: {

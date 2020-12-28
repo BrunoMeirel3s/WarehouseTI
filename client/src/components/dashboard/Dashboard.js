@@ -1,13 +1,16 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import { Container } from "react-bootstrap";
 import PrivateRoute from "../routing/PrivateRoute";
+import PrivateRouteAdmin from "../routing/PrivateRouteAdmin";
 import Trocatoner from "./TrocaToner";
 import Suprimentos from "./Suprimentos";
 import Relatorios from "./Relatorios";
 import Administracao from "./Administracao";
+import { carregarUsuario } from "../../actions/auth";
+import { useEffect } from "react";
 import { logout } from "../../actions/auth";
 import img from "../imgs/icon-white.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,7 +23,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 
-const Dashboard = ({ isAuthenticated, logout }) => {
+const Dashboard = ({ logout, carregarUsuario, auth: { usuario } }) => {
+  useEffect(() => {
+    carregarUsuario();
+  }, []);
+
   return (
     <Fragment>
       <Container>
@@ -71,19 +78,27 @@ const Dashboard = ({ isAuthenticated, logout }) => {
                 </Link>
               </li>
               <hr className="hr" />
-              <li
-                className={`menu-item ${
-                  window.location.pathname == "/administracao"
-                    ? "menu-active"
-                    : ""
-                }`}
-                id="relatorios"
-              >
-                <Link to="/administracao">
-                  <FontAwesomeIcon icon={faWrench} /> <span>Administração</span>
-                </Link>
-              </li>
-              <hr className="hr" />
+              {usuario && usuario.administrador ? (
+                <span>
+                  <li
+                    className={`menu-item ${
+                      window.location.pathname == "/administracao"
+                        ? "menu-active"
+                        : ""
+                    }`}
+                    id="relatorios"
+                  >
+                    <Link to="/administracao">
+                      <FontAwesomeIcon icon={faWrench} />{" "}
+                      <span>Administração</span>
+                    </Link>
+                  </li>
+                  <hr className="hr" />
+                </span>
+              ) : (
+                ""
+              )}
+
               <li className="menu-item" id="relatorios">
                 <Link className="menu-item" to="/" onClick={logout}>
                   <FontAwesomeIcon icon={faSignOutAlt} /> <span>Logout</span>
@@ -96,17 +111,17 @@ const Dashboard = ({ isAuthenticated, logout }) => {
             <Switch>
               <PrivateRoute exact path="/trocatoner" component={Trocatoner} />
               <PrivateRoute exact path="/suprimentos" component={Suprimentos} />
-              <PrivateRoute
+              <PrivateRouteAdmin
                 exact
                 path="/administracao"
                 component={Administracao}
               />
-              <PrivateRoute
+              <PrivateRouteAdmin
                 exact
                 path="/administracaoimpressoras"
                 component={Administracao}
               />
-              <PrivateRoute
+              <PrivateRouteAdmin
                 exact
                 path="/administracaosuprimentos"
                 component={Administracao}
@@ -122,10 +137,10 @@ const Dashboard = ({ isAuthenticated, logout }) => {
 
 Dashboard.propTypes = {
   logout: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
+  carregarUsuario: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
+  auth: state.auth,
 });
-export default connect(mapStateToProps, { logout })(Dashboard);
+export default connect(mapStateToProps, { logout, carregarUsuario })(Dashboard);

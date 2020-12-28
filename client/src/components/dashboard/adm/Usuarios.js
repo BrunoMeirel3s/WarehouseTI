@@ -1,5 +1,4 @@
 import React, { Fragment, useState } from "react";
-import Moment from "react-moment";
 import { connect } from "react-redux";
 import Alert from "../../layout/Alert";
 import PropTypes from "prop-types";
