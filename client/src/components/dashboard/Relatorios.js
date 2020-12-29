@@ -6,6 +6,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import Alert from "../layout/Alert";
 import { obterRelatorio } from "../../actions/relatorio";
+import createPDF from "../../utils/createPDF";
 
 const Relatorios = ({ obterRelatorio, relatorio: { relatorio } }) => {
   const [formData, setFormData] = useState({
@@ -22,6 +23,29 @@ const Relatorios = ({ obterRelatorio, relatorio: { relatorio } }) => {
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  /*
+  if (relatorio) {
+    let mywindow = window.open(
+      "",
+      "PRINT",
+      "height=650,width=auto,top=100,left=150"
+    );
+
+    mywindow.document.write(
+      `<html><head><title>${`Relatório de troca`}</title>`
+    );
+    mywindow.document.write("</head><body >");
+    mywindow.document.write(document.getElementById("relatorio").innerHTML);
+    mywindow.document.write("</body></html>");
+
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus();
+
+    mywindow.print();
+    mywindow.close();
+  }
+  */
 
   return (
     <Fragment>
@@ -66,7 +90,7 @@ const Relatorios = ({ obterRelatorio, relatorio: { relatorio } }) => {
             </div>
           </form>
         </div>
-        <div className="col-12">
+        <div className="col-12" id="relatorio">
           {relatorio && relatorio.length > 0 ? <hr /> : ""}
           {relatorio && relatorio.length > 0 ? (
             <h4>Trocas Registradas no período:</h4>
@@ -74,7 +98,7 @@ const Relatorios = ({ obterRelatorio, relatorio: { relatorio } }) => {
             ""
           )}
           {relatorio && relatorio.length > 0 ? (
-            <table className="table">
+            <table className="table table-striped table-bordered">
               <thead>
                 <tr>
                   <th scope="col">Data</th>
@@ -82,6 +106,7 @@ const Relatorios = ({ obterRelatorio, relatorio: { relatorio } }) => {
                   <th scope="col">Modelo</th>
                   <th scope="col">Localização</th>
                   <th scope="col">Toner</th>
+                  <th scope="col">Código Toner</th>
                   <th scope="col">Total A3</th>
                   <th scope="col">Total A4</th>
                   <th scope="col">Usuário</th>
@@ -98,6 +123,7 @@ const Relatorios = ({ obterRelatorio, relatorio: { relatorio } }) => {
                       <td>{rel.modeloImpressora}</td>
                       <td>{rel.localizacao}</td>
                       <td>{rel.corToner}</td>
+                      <td>{rel.codigoToner}</td>
                       <td>{rel.totalA3}</td>
                       <td>{rel.totalA4}</td>
                       <td>{rel.usuario}</td>

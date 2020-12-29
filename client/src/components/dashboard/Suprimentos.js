@@ -145,7 +145,7 @@ const Suprimentos = ({
       <div className="mt-1 col-12">
         <h4>Suprimentos Disponíveis:</h4>
         {todosSuprimentos && todosSuprimentos.length > 0 ? (
-          <table className="table">
+          <table className="table table-striped table-bordered">
             <thead>
               <tr>
                 <th scope="col">#</th>

@@ -195,7 +195,7 @@ const Impressoras = ({
       <div className="col-12">
         <h4>Impressoras Cadastradas no Sistema:</h4>
         {todasImpressoras && todasImpressoras.length > 0 ? (
-          <table className="table">
+          <table className="table table-striped table-bordered">
             <thead>
               <tr>
                 <th scope="col">#</th>

@@ -106,20 +106,29 @@ router.post(
     const nDataFinal = dataFinal.split("-");
     nDataFinal[2] = (parseInt(nDataFinal[2]) + 1).toString();
     try {
-      let relatorio = await RegistroTroca.find({
-        date: {
-          $gte: dataInicial,
-          $lt: new Date(new Date(dataFinal).setHours(23, 59, 59)),
-        },
-      });
+      let relatorio;
+
+      try {
+        relatorio = await RegistroTroca.find({
+          date: {
+            $gte: dataInicial,
+            $lt: new Date(new Date(nDataFinal).setHours(23, 59, 59)),
+          },
+        });
+      } catch (error) {
+        relatorio = await RegistroTroca.find({
+          date: {
+            $gte: dataInicial,
+            $lt: new Date(new Date(dataFinal).setHours(23, 59, 59)),
+          },
+        });
+      }
 
       if (relatorio.length < 1) {
         return res.status(400).json({
           msg: "Não foram encontradas trocas durante o período informado!",
         });
-      }
-
-      if (relatorio) {
+      } else {
         return res.json(relatorio);
       }
     } catch (err) {

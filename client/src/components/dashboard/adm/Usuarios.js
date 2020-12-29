@@ -208,7 +208,7 @@ const Usuarios = ({
       <div className="col-12">
         <h4>Usuários Cadastrados no Sistema:</h4>
         {todosUsuarios && todosUsuarios.length > 0 ? (
-          <table className="table">
+          <table className="table table-striped table-bordered">
             <thead>
               <tr>
                 <th scope="col">#</th>
