@@ -102,6 +102,7 @@ router.post(
     if (!erros.isEmpty()) {
       return res.status(400).json({ erros: erros.array() });
     }
+
     const { dataInicial, dataFinal } = req.body;
     const nDataFinal = dataFinal.split("-");
     nDataFinal[2] = (parseInt(nDataFinal[2]) + 1).toString();
@@ -112,7 +113,7 @@ router.post(
         relatorio = await RegistroTroca.find({
           date: {
             $gte: dataInicial,
-            $lt: new Date(new Date(nDataFinal).setHours(23, 59, 59)),
+            $lt: new Date(new Date(nDataFinal)),
           },
         });
       } catch (error) {

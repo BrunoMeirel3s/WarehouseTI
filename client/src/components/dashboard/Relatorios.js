@@ -6,7 +6,6 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import Alert from "../layout/Alert";
 import { obterRelatorio } from "../../actions/relatorio";
-import createPDF from "../../utils/createPDF";
 
 const Relatorios = ({ obterRelatorio, relatorio: { relatorio } }) => {
   const [formData, setFormData] = useState({
@@ -24,8 +23,7 @@ const Relatorios = ({ obterRelatorio, relatorio: { relatorio } }) => {
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  /*
-  if (relatorio) {
+  const printPDF = (e) => {
     let mywindow = window.open(
       "",
       "PRINT",
@@ -35,6 +33,14 @@ const Relatorios = ({ obterRelatorio, relatorio: { relatorio } }) => {
     mywindow.document.write(
       `<html><head><title>${`Relatório de troca`}</title>`
     );
+    /*
+    mywindow.document.write(`<link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous"
+  />`);
+  */
     mywindow.document.write("</head><body >");
     mywindow.document.write(document.getElementById("relatorio").innerHTML);
     mywindow.document.write("</body></html>");
@@ -43,9 +49,8 @@ const Relatorios = ({ obterRelatorio, relatorio: { relatorio } }) => {
     mywindow.focus();
 
     mywindow.print();
-    mywindow.close();
-  }
-  */
+    //mywindow.close();
+  };
 
   return (
     <Fragment>
@@ -90,48 +95,62 @@ const Relatorios = ({ obterRelatorio, relatorio: { relatorio } }) => {
             </div>
           </form>
         </div>
-        <div className="col-12" id="relatorio">
-          {relatorio && relatorio.length > 0 ? <hr /> : ""}
-          {relatorio && relatorio.length > 0 ? (
-            <h4>Trocas Registradas no período:</h4>
-          ) : (
-            ""
-          )}
-          {relatorio && relatorio.length > 0 ? (
-            <table className="table table-striped table-bordered">
-              <thead>
-                <tr>
-                  <th scope="col">Data</th>
-                  <th scope="col">Patrimônio</th>
-                  <th scope="col">Modelo</th>
-                  <th scope="col">Localização</th>
-                  <th scope="col">Toner</th>
-                  <th scope="col">Código Toner</th>
-                  <th scope="col">Total A3</th>
-                  <th scope="col">Total A4</th>
-                  <th scope="col">Usuário</th>
-                </tr>
-              </thead>
-              <tbody>
-                {relatorio.map((rel) => {
-                  return (
-                    <tr key={rel._id}>
-                      <td>
-                        <Moment format="DD/MM/YYYY">{rel.date}</Moment>
-                      </td>
-                      <td>{rel.patrimonio}</td>
-                      <td>{rel.modeloImpressora}</td>
-                      <td>{rel.localizacao}</td>
-                      <td>{rel.corToner}</td>
-                      <td>{rel.codigoToner}</td>
-                      <td>{rel.totalA3}</td>
-                      <td>{rel.totalA4}</td>
-                      <td>{rel.usuario}</td>
+        <div className="col-12">
+          {dataInicial && dataFinal && relatorio && relatorio.length > 0 ? (
+            <div>
+              <div className="col-12" id="relatorio">
+                <h4>
+                  Trocas Registradas no Período de:{" "}
+                  <Moment format="DD/MM/YYYY">{dataInicial}</Moment> a{" "}
+                  <Moment format="DD/MM/YYYY">{dataFinal}</Moment>
+                </h4>
+                <table className="table table-striped table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">Data</th>
+                      <th scope="col">Patrimônio</th>
+                      <th scope="col">Modelo</th>
+                      <th scope="col">Localização</th>
+                      <th scope="col">Toner</th>
+                      <th scope="col">Código Toner</th>
+                      <th scope="col">Total A3</th>
+                      <th scope="col">Total A4</th>
+                      <th scope="col">Usuário</th>
                     </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                  </thead>
+                  <tbody>
+                    {relatorio.map((rel) => {
+                      return (
+                        <tr key={rel._id}>
+                          <td>
+                            <Moment format="DD/MM/YYYY">{rel.date}</Moment>
+                          </td>
+                          <td>{rel.patrimonio}</td>
+                          <td>{rel.modeloImpressora}</td>
+                          <td>{rel.localizacao}</td>
+                          <td>{rel.corToner}</td>
+                          <td>{rel.codigoToner}</td>
+                          <td>{rel.totalA3}</td>
+                          <td>{rel.totalA4}</td>
+                          <td>{rel.usuario}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+              <div className="col-12 d-flex justify-content-center">
+                <button
+                  id="limpar"
+                  className="btn btn-lg btn-red ml-4"
+                  onClick={(e) => {
+                    printPDF(e);
+                  }}
+                >
+                  Imprimir
+                </button>
+              </div>
+            </div>
           ) : (
             <span className="ml-3 bg-danger text-light pr-2">
               * Selecione um período para exibir{" "}
