@@ -52,6 +52,15 @@ const Relatorios = ({ obterRelatorio, relatorio: { relatorio } }) => {
     //mywindow.close();
   };
 
+  let totais;
+  if (relatorio) {
+    totais = relatorio
+      .map((rel) => rel.patrimonio)
+      .filter((elem, pos, self) => {
+        return self.indexOf(elem) == pos;
+      });
+  }
+
   return (
     <Fragment>
       <div className="mt-3">
@@ -138,70 +147,101 @@ const Relatorios = ({ obterRelatorio, relatorio: { relatorio } }) => {
                     })}
                   </tbody>
                 </table>
-                <div className="col-5">
-                  <table className="table table-striped table-bordered">
-                    <thead>
-                      <tr>
-                        <th
-                          scope="col"
-                          colSpan="2"
-                          style={{ textAlign: "center" }}
-                        >
-                          Totais de Toners Trocados
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Toners Pretos Trocados:</td>
-                        <td>
-                          {
-                            relatorio
-                              .map((rel) => rel.corToner)
-                              .filter((corToner) => corToner == "Preto").length
-                          }
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Toners Amarelos Trocados:</td>
-                        <td>
-                          {
-                            relatorio
-                              .map((rel) => rel.corToner)
-                              .filter((corToner) => corToner == "Amarelo")
-                              .length
-                          }
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Toners Cianos Trocados:</td>
-                        <td>
-                          {
-                            relatorio
-                              .map((rel) => rel.corToner)
-                              .filter((corToner) => corToner == "Ciano").length
-                          }
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Toners Magentas Trocados:</td>
-                        <td>
-                          {
-                            relatorio
-                              .map((rel) => rel.corToner)
-                              .filter((corToner) => corToner == "Mangenta")
-                              .length
-                          }
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                <div className="d-flex col-12">
+                  <div className="col-5">
+                    <table className="table table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th
+                            scope="col"
+                            colSpan="2"
+                            style={{ textAlign: "center", fontSize: "1.1rem" }}
+                          >
+                            Totais de Toners Trocados
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Toners Preto Trocados:</td>
+                          <td>
+                            {
+                              relatorio
+                                .map((rel) => rel.corToner)
+                                .filter((corToner) => corToner == "Preto")
+                                .length
+                            }
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Toners Amarelo Trocados:</td>
+                          <td>
+                            {
+                              relatorio
+                                .map((rel) => rel.corToner)
+                                .filter((corToner) => corToner == "Amarelo")
+                                .length
+                            }
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Toners Ciano Trocados:</td>
+                          <td>
+                            {
+                              relatorio
+                                .map((rel) => rel.corToner)
+                                .filter((corToner) => corToner == "Ciano")
+                                .length
+                            }
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Toners Magenta Trocados:</td>
+                          <td>
+                            {
+                              relatorio
+                                .map((rel) => rel.corToner)
+                                .filter((corToner) => corToner == "Magenta")
+                                .length
+                            }
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="col-5">
+                    <table className="table table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th
+                            scope="col"
+                            colSpan="3"
+                            style={{ textAlign: "center", fontSize: "1.1rem" }}
+                          >
+                            Totais de Impressões no Período
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>Patrimônio</th>
+                          <th>Total A3</th>
+                          <th>Total A4</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {totais.map((elem) => (
+                          <tr>
+                            <td>{elem}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
               <div className="col-12 d-flex justify-content-center">
                 <button
                   id="limpar"
-                  className="btn btn-lg btn-red ml-4"
+                  className="btn btn-lg btn-red ml-4 mb-3"
                   onClick={(e) => {
                     printPDF(e);
                   }}
