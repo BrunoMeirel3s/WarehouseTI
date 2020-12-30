@@ -33,15 +33,15 @@ const Relatorios = ({ obterRelatorio, relatorio: { relatorio } }) => {
     mywindow.document.write(
       `<html><head><title>${`Relatório de troca`}</title>`
     );
-    /*
+
     mywindow.document.write(`<link
     rel="stylesheet"
     href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-    crossorigin="anonymous"
-  />`);
-  */
+    crossorigin="anonymous"/>`);
+
     mywindow.document.write("</head><body >");
+    mywindow.document.write(`<h1>Relatório de Trocas:</h1><hr />`);
     mywindow.document.write(document.getElementById("relatorio").innerHTML);
     mywindow.document.write("</body></html>");
 
@@ -138,6 +138,65 @@ const Relatorios = ({ obterRelatorio, relatorio: { relatorio } }) => {
                     })}
                   </tbody>
                 </table>
+                <div className="col-5">
+                  <table className="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th
+                          scope="col"
+                          colSpan="2"
+                          style={{ textAlign: "center" }}
+                        >
+                          Totais de Toners Trocados
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Toners Pretos Trocados:</td>
+                        <td>
+                          {
+                            relatorio
+                              .map((rel) => rel.corToner)
+                              .filter((corToner) => corToner == "Preto").length
+                          }
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Toners Amarelos Trocados:</td>
+                        <td>
+                          {
+                            relatorio
+                              .map((rel) => rel.corToner)
+                              .filter((corToner) => corToner == "Amarelo")
+                              .length
+                          }
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Toners Cianos Trocados:</td>
+                        <td>
+                          {
+                            relatorio
+                              .map((rel) => rel.corToner)
+                              .filter((corToner) => corToner == "Ciano").length
+                          }
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Toners Magentas Trocados:</td>
+                        <td>
+                          {
+                            relatorio
+                              .map((rel) => rel.corToner)
+                              .filter((corToner) => corToner == "Mangenta")
+                              .length
+                          }
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <div className="col-12 d-flex justify-content-center">
                 <button
