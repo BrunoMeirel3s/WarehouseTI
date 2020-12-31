@@ -231,6 +231,15 @@ const Relatorios = ({ obterRelatorio, relatorio: { relatorio } }) => {
                         {totais.map((elem) => (
                           <tr>
                             <td>{elem}</td>
+                            <td>
+                              {
+                                relatorio
+                                  .map((rel) => rel)
+                                  .filter(
+                                    (relatorio) => relatorio.patrimonio == elem
+                                  ).length
+                              }
+                            </td>
                           </tr>
                         ))}
                       </tbody>
