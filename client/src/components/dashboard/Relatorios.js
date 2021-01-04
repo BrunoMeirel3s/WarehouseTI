@@ -52,6 +52,8 @@ const Relatorios = ({ obterRelatorio, relatorio: { relatorio } }) => {
     //mywindow.close();
   };
 
+  let totalA3 = {};
+
   let totais;
   if (relatorio) {
     totais = relatorio
@@ -232,13 +234,14 @@ const Relatorios = ({ obterRelatorio, relatorio: { relatorio } }) => {
                           <tr>
                             <td>{elem}</td>
                             <td>
-                              {
-                                relatorio
-                                  .map((rel) => rel)
-                                  .filter(
-                                    (relatorio) => relatorio.patrimonio == elem
-                                  ).length
-                              }
+                              {relatorio
+                                .map((rel) => rel)
+                                .filter(
+                                  (relatorio) => relatorio.patrimonio == elem
+                                )
+                                .map((relAtual) => {
+                                  console.log(parseInt(relAtual.totalA3));
+                                })}
                             </td>
                           </tr>
                         ))}
