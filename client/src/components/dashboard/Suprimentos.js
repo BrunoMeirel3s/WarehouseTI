@@ -54,10 +54,11 @@ const Suprimentos = ({
     });
     window.scrollTo(0, 0);
   };
-
+  /*
   useEffect(() => {
     obterTodosSuprimentos();
   }, []);
+  */
 
   return (
     <Fragment>

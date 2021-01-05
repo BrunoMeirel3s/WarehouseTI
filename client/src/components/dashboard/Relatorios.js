@@ -212,42 +212,6 @@ const Relatorios = ({ obterRelatorio, relatorio: { relatorio } }) => {
                       </tbody>
                     </table>
                   </div>
-                  <div className="col-5">
-                    <table className="table table-striped table-bordered">
-                      <thead>
-                        <tr>
-                          <th
-                            scope="col"
-                            colSpan="3"
-                            style={{ textAlign: "center", fontSize: "1.1rem" }}
-                          >
-                            Totais de Impressões no Período
-                          </th>
-                        </tr>
-                        <tr>
-                          <th>Patrimônio</th>
-                          <th>Total A3</th>
-                          <th>Total A4</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {totais.map((elem) => (
-                          <tr>
-                            <td>{elem}</td>
-                            <td>
-                              {
-                                relatorio
-                                  .map((rel) => rel)
-                                  .filter(
-                                    (relatorio) => relatorio.patrimonio == elem
-                                  ).length
-                              }
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
                 </div>
               </div>
               <div className="col-12 d-flex justify-content-center">

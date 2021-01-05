@@ -26,7 +26,7 @@ import PropTypes from "prop-types";
 const Dashboard = ({ logout, carregarUsuario, auth: { usuario } }) => {
   useEffect(() => {
     carregarUsuario();
-  }, []);
+  }, [carregarUsuario]);
 
   return (
     <Fragment>

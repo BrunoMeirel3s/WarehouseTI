@@ -16,9 +16,6 @@ const Trocatoner = ({
   todasImpressoras,
   registrarTroca,
 }) => {
-  if (document.getElementById("registrartroca")) {
-    document.getElementById("registrartroca").classList.add = "menu-active";
-  }
   const [formData, setFormData] = useState({
     patrimonio: "",
     codigoToner: "",
