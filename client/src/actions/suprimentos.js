@@ -73,7 +73,6 @@ export const inserirSuprimento = (
 export const obterTodosSuprimentos = () => async (dispatch) => {
   try {
     const res = await axios.get("/api/suprimento/disponivel");
-    dispatch({ type: USUARIO_LOGADO });
     dispatch({
       type: OBTER_TODOS_SUPRIMENTOS,
       payload: res.data,

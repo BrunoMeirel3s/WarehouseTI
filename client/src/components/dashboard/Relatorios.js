@@ -85,7 +85,7 @@ const Relatorios = ({ obterRelatorio, relatorio: { relatorio } }) => {
                 required
               />
             </div>
-            <div className="col-5">
+            <div className="col-6">
               <label className="label" for="tonerTrocado">
                 Data Final:
               </label>
@@ -98,12 +98,12 @@ const Relatorios = ({ obterRelatorio, relatorio: { relatorio } }) => {
                   onChange={(e) => onChange(e)}
                   required
                 />
+                <div className="input-group-prepend">
+                  <button type="submit" className="btn btm-lg btn-red">
+                    <FontAwesomeIcon icon={faSearch} />
+                  </button>
+                </div>
               </div>
-            </div>
-            <div className="col-2 mt-3 pt-3">
-              <button type="submit" className="btn btm-lg btn-red">
-                <FontAwesomeIcon icon={faSearch} />
-              </button>
             </div>
           </form>
         </div>

@@ -16,6 +16,10 @@ const Suprimentos = ({
   obterTodosSuprimentos,
   todosSuprimentos,
 }) => {
+  useEffect(() => {
+    obterTodosSuprimentos();
+  }, []);
+
   const [formData, setFormData] = useState({
     codigo: "",
     modelo: "C911",
@@ -54,11 +58,6 @@ const Suprimentos = ({
     });
     window.scrollTo(0, 0);
   };
-  /*
-  useEffect(() => {
-    obterTodosSuprimentos();
-  }, []);
-  */
 
   return (
     <Fragment>
