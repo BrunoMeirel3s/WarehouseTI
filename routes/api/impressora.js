@@ -94,7 +94,7 @@ router.post(
   }
 );
 
-router.get("/disponivel", async (req, res) => {
+router.get("/disponivel", auth, async (req, res) => {
   try {
     let impressoras = await Impressora.find({ disponivel: true });
     if (!impressoras) {
@@ -107,7 +107,7 @@ router.get("/disponivel", async (req, res) => {
   }
 });
 
-router.post("/obterimpressora", async (req, res) => {
+router.post("/obterimpressora", auth, async (req, res) => {
   const { patrimonio } = req.body;
   try {
     let impressora = await Impressora.findOne({ patrimonio });
@@ -124,7 +124,7 @@ router.post("/obterimpressora", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
     let impressora = await Impressora.find();
     if (impressora) {

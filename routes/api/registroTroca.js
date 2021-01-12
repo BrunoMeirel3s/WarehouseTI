@@ -93,6 +93,7 @@ router.post(
 // @access Private
 router.post(
   "/relatorio",
+  auth,
   [
     check("dataInicial", "Insira a data inicial").not().isEmpty(),
     check("dataFinal", "Insira a data final").not().isEmpty(),

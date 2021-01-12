@@ -40,7 +40,13 @@ const Suprimentos = ({
     if (!codigo) {
       setAlert("Informe o código do suprimento!", "danger");
     } else {
-      inserirSuprimento(codigo, modelo, disponivel, cor, atualizarSuprimento);
+      inserirSuprimento(
+        codigo.trim(),
+        modelo,
+        disponivel,
+        cor,
+        atualizarSuprimento
+      );
     }
 
     setFormData({ ...formData, codigo: " " });

@@ -51,7 +51,7 @@ const Usuarios = ({
     } else {
       inserirUsuario(
         nome,
-        matricula,
+        matricula.trim(),
         senha,
         ativo,
         administrador,

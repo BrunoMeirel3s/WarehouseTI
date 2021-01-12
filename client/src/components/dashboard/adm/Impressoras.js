@@ -50,7 +50,7 @@ const Impressoras = ({
     e.preventDefault();
 
     inserirImpressora(
-      patrimonio,
+      patrimonio.trim(),
       modelo,
       localizacao,
       enderecoIp,

@@ -42,7 +42,7 @@ const Suprimentos = ({
     e.preventDefault();
 
     inserirSuprimento(
-      codigoToner,
+      codigoToner.trim(),
       modelo,
       disponivel,
       cor,

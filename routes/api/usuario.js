@@ -64,12 +64,15 @@ router.put("/", auth, async (req, res) => {
 router.post(
   "/",
   [
-    check("ativo", "Informe se o colaborador está ativo").not().isEmpty(),
-    check("nome", "Insira o nome do colaborador").not().isEmpty(),
-    check("matricula", "Insira a matrícula do colaborador").not().isEmpty(),
-    check("senha", "Insira uma senha com mais de 6 caracteres").isLength({
-      min: 6,
-    }),
+    auth,
+    [
+      check("ativo", "Informe se o colaborador está ativo").not().isEmpty(),
+      check("nome", "Insira o nome do colaborador").not().isEmpty(),
+      check("matricula", "Insira a matrícula do colaborador").not().isEmpty(),
+      check("senha", "Insira uma senha com mais de 6 caracteres").isLength({
+        min: 6,
+      }),
+    ],
   ],
   async (req, res) => {
     //const erros receive the results of the validations above
