@@ -17,17 +17,17 @@ router.get("/", auth, async (req, res) => {
     res.json(usuario);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send("Erro no servidor");
   }
 });
 
 router.put("/", auth, async (req, res) => {
-  const { nome, matricula, senha, ativo, administrador } = req.body;
+  const { nome, usuario, senha, ativo, administrador } = req.body;
 
   const camposUsuario = {};
 
   if (nome) camposUsuario.nome = nome;
-  if (matricula) camposUsuario.matricula = matricula;
+  if (usuario) camposUsuario.usuario = usuario;
   if (senha) {
     const salt = await bcrypt.genSalt(10);
     camposUsuario.senha = await bcrypt.hash(senha, salt);
@@ -36,10 +36,10 @@ router.put("/", auth, async (req, res) => {
   if (administrador) camposUsuario.administrador = administrador;
 
   try {
-    let usuario = await Usuario.findOne({ matricula });
+    let usuario = await Usuario.findOne({ usuario });
     if (usuario) {
       usuario = await Usuario.findOneAndUpdate(
-        { matricula: req.body.matricula },
+        { matricula: req.body.usuario },
         { $set: camposUsuario },
         { new: true }
       );
@@ -68,7 +68,7 @@ router.post(
     [
       check("ativo", "Informe se o colaborador está ativo").not().isEmpty(),
       check("nome", "Insira o nome do colaborador").not().isEmpty(),
-      check("matricula", "Insira a matrícula do colaborador").not().isEmpty(),
+      check("usuario", "Insira o usuário do colaborador").not().isEmpty(),
       check("senha", "Insira uma senha com mais de 6 caracteres").isLength({
         min: 6,
       }),

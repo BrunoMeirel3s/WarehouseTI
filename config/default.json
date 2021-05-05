@@ -1,4 +1,4 @@
 {
-    "mongoURI": "mongodb://localhost:27017/warehouse",
-    "jwtSecret": "123456789"
+    "mongoURI": "mongodb://localhost:27017/automacaoIntranetHPD",
+    "jwtSecret": "@ut0m@c@oHPD@!"
 }
