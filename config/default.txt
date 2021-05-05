@@ -1,4 +1,0 @@
-{    
-    "mongoURI": "mongodb+srv://DevConnector:jair140514@cluster0.wxdjd.mongodb.net/Warehouse?retryWrites=true&w=majority",
-    "jwtSecret": "123456789"
-}
