@@ -1,4 +1,4 @@
-# warehouse
+# Warehouse
 Projeto desenvolvido para prática de conhecimentos obtidos após realização de curso sobre React JS
 <h2>🚀 Tecnologias</h2>
 <hr>
