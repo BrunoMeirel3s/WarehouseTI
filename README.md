@@ -21,8 +21,9 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
   a cada troca de toner, no Warehouse é possível realizar o cadastro de impressoras, cadastro de toners e cadastro de usuários que terão acesso a aplicação
 </p>
 <div style="align-items: center;">
-<img src="https://github.com/BrunoMeirel3s/React-Native-NLW5/blob/main/plantmanager/imagens%20do%20projeto/tela%201.JPG"></img>
-<img src="https://github.com/BrunoMeirel3s/React-Native-NLW5/blob/main/plantmanager/imagens%20do%20projeto/tela%204.JPG"></img>
-<img src="https://github.com/BrunoMeirel3s/React-Native-NLW5/blob/main/plantmanager/imagens%20do%20projeto/tela%205.JPG"></img>
+<img src="https://github.com/BrunoMeirel3s/WarehouseTI/blob/main/prints/tela%20de%20login.JPG"></img>
+<img src="https://github.com/BrunoMeirel3s/WarehouseTI/blob/main/prints/tela%20inicial.JPG"></img>
+<img src="https://github.com/BrunoMeirel3s/WarehouseTI/blob/main/prints/relat%C3%B3rios.JPG"></img>
+<img src="https://github.com/BrunoMeirel3s/WarehouseTI/blob/main/prints/administracao.JPG"></img>
 </div>
 
