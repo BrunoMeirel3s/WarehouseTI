@@ -9,7 +9,6 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
   <li><a href="https://www.mongodb.com/" target="_blank">MongoDB</a></li>
   <li><a href="https://mongoosejs.com/" target="_blank">Mongoose</a></li>
   <li><a href="https://getbootstrap.com/" target="_blank">Bootstrap</a></li>
-  <li><a href="https://mongoosejs.com/" target="_blank">Mongoose</a></li>
   <li><a href="https://jwt.io/" target="_blank">JSON Web Tokens</a></li>
   <li><a href="https://www.npmjs.com/package/bcrypt" target="_blank">Bcrypt</a></li>
   <li><a href="https://react-redux.js.org/" target="_blank">React-Redux</a></li>
